@@ -19,24 +19,24 @@ public class DayFactory
 
     }
 
-    public Day createDay(int day, int month, int year, List<Event> events)
+    public DayModel createDay(int day, int month, int year, List<Event> events)
     {
-        return new Day(day,month,year,events);
+        return new DayModel(day,month,year,events);
     }
 
-    public Day createDay(int day, int month, int year)
+    public DayModel createDay(int day, int month, int year)
     {
-        return new Day(day,month,year);
+        return new DayModel(day,month,year);
     }
 
-    public Day createDummyDay()
+    public DayModel createDummyDay()
     {
-        return new Day(1,0,1000);
+        return new DayModel(1,0,1000);
     }
 
-    public Set<Day> getDaysByYear(int year)
+    public Set<DayModel> getDaysByYear(int year)
     {
-        Set<Day> requestedDays = new TreeSet<>();
+        Set<DayModel> requestedDays = new TreeSet<>();
         for (Month m : Month.values())
         {
             int aantalDays = m.getTotaaldays();

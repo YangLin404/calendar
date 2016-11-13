@@ -1,10 +1,14 @@
 group 'yanglin'
 version '0.1'
 
-apply plugin:'application'
-mainClassName = "com.yanglin.Main"
-
-sourceCompatibility = 1.8
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
+    }
+}
 
 repositories {
     mavenCentral()
@@ -14,11 +18,21 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'spring-boot'
 
 dependencies {
 
     compile 'org.springframework:spring-context:4.3.4.RELEASE'
 
     compile 'org.kordamp.bootstrapfx:bootstrapfx-core:0.2.0'
+
+    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+
+    // tag::jetty[]
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    // end::actuator[]
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

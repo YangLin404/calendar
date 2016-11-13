@@ -3,7 +3,7 @@ package com.yanglin.Models;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Day implements Comparable<Day>
+public class DayModel implements Comparable<DayModel>
 {
     private long id;
     private int day;
@@ -12,12 +12,12 @@ public class Day implements Comparable<Day>
     private Weekday weekday;
     private List<Event> events;
 
-    public Day()
+    public DayModel()
     {
         this.events = new LinkedList<>();
     }
 
-    public Day(int day, int month, int year)
+    public DayModel(int day, int month, int year)
     {
         this();
         this.day = day;
@@ -26,7 +26,7 @@ public class Day implements Comparable<Day>
         this.weekday = Helper.getWeekdayFromDate(this.year,this.month,this.day);
     }
 
-    public Day(int day, int month, int year, List<Event> events)
+    public DayModel(int day, int month, int year, List<Event> events)
     {
         this(day,month,year);
         this.events = events;
@@ -103,13 +103,11 @@ public class Day implements Comparable<Day>
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!(o instanceof Day)) return false;
+        if (!(o instanceof DayModel)) return false;
 
-        Day day1 = (Day) o;
+        DayModel day1 = (DayModel) o;
 
-        if (day != day1.day) return false;
-        if (year != day1.year) return false;
-        return month == day1.month;
+        return day == day1.day && year == day1.year && month == day1.month;
 
     }
 
@@ -124,7 +122,7 @@ public class Day implements Comparable<Day>
     }
 
     @Override
-    public int compareTo(Day o)
+    public int compareTo(DayModel o)
     {
         if (year == o.year)
         {

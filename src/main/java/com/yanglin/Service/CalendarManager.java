@@ -1,25 +1,21 @@
 package com.yanglin.Service;
 
-import com.yanglin.Models.Day;
+import com.yanglin.Models.DayModel;
+import com.yanglin.Repository.DayRepo;
+import org.springframework.stereotype.Service;
 
 import java.util.SortedSet;
 
-
+@Service
 public class CalendarManager
 {
-    private static CalendarManager ourInstance = new CalendarManager();
+    private DayRepo dayRepo;
 
-    public static CalendarManager getInstance()
+    private SortedSet<DayModel> days;
+
+
+    public CalendarManager(DayRepo dayRepo)
     {
-        return ourInstance;
-    }
-
-
-    private SortedSet<Day> days;
-
-
-    private CalendarManager()
-    {
-
+        this.dayRepo = dayRepo;
     }
 }
