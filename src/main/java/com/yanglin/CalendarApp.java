@@ -29,7 +29,7 @@ public class CalendarApp extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(CalendarApp.class);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/calendarView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/mainView.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
         rootNode = fxmlLoader.load();
     }
