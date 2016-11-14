@@ -2,6 +2,7 @@ package com.yanglin.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -11,6 +12,9 @@ public class MainController
 {
     @FXML
     private Tab CalendarTab;
+
+    @FXML
+    private BorderPane CalendarPane;
 
     @FXML
     @Autowired
