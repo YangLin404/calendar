@@ -1,14 +1,15 @@
 package com.yanglin.Models;
 
-import java.util.Date;
+import java.time.LocalTime;
+import java.util.Calendar;
 
 
 public class Event
 {
     private long id;
     private String title;
-    private Date startTime;
-    private Date endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private long dayId;
 
     public Event()
@@ -16,12 +17,13 @@ public class Event
 
     }
 
-    public Event(String title, Date startTime, Date endTime, long dayId)
+    public Event(String title, LocalTime startTime, LocalTime endTime, long dayId)
     {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayId = dayId;
+
 
     }
 
@@ -42,22 +44,22 @@ public class Event
         this.title = title;
     }
 
-    public Date getEndTime()
+    public LocalTime getEndTime()
     {
         return endTime;
     }
 
-    public void setEndTime(Date endTime)
+    public void setEndTime(LocalTime endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getStartTime()
+    public LocalTime getStartTime()
     {
         return startTime;
     }
 
-    public void setStartTime(Date startTime)
+    public void setStartTime(LocalTime startTime)
     {
         this.startTime = startTime;
     }
@@ -70,5 +72,15 @@ public class Event
     public void setId(long id)
     {
         this.id = id;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.title)
+                .append(" ")
+                .append(this.getStartTime().toString());
+        return sb.toString();
     }
 }
