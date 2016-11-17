@@ -8,12 +8,17 @@ import com.yanglin.Models.Month;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by yanglin on 17/11/16.
  */
 public class DayRepoHC implements IDayRepo
 {
+
+
+    private final static Logger LOGGER = Logger.getLogger(DayRepoHC.class.getName());
     //just for testing
     private TreeSet<DayModel> fakeDays;
     private EventFactory eventFactory;
@@ -34,6 +39,7 @@ public class DayRepoHC implements IDayRepo
 
     private void setupDays()
     {
+        LOGGER.log(Level.INFO,"setup HC Days starting");
         int total=0;
         for (Month m : Month.values())
         {
@@ -44,13 +50,17 @@ public class DayRepoHC implements IDayRepo
                 fakeDays.add(day);
             }
         }
+        LOGGER.log(Level.FINE,"setup HC Days finished size of fakedays:{0}",fakeDays.size());
     }
 
     private void setupEvents()
     {
+        LOGGER.log(Level.INFO,"setup HC fakeEvents starting");
         for (DayModel d : fakeDays)
         {
             d.addEvent(eventFactory.createRandomEvent(d));
         }
+
+        LOGGER.log(Level.INFO,"setup HC fakeEvents finished");
     }
 }

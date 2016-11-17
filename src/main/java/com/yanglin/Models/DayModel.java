@@ -1,12 +1,12 @@
 package com.yanglin.Models;
 
+import com.yanglin.Utils.Helper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class DayModel implements Comparable<DayModel>
@@ -146,14 +146,14 @@ public class DayModel implements Comparable<DayModel>
     @Override
     public int compareTo(DayModel o)
     {
-        if (yearProp == o.yearProp)
+        if (getYear() == o.getYear())
         {
             if (month == o.month)
             {
-                return dayProp.get() - o.getDay();
+                return getDay() - o.getDay();
             }
             return month.getDigit() - o.getMonth().getDigit();
         }
-        return yearProp.getValue() - o.yearProp.getValue();
+        return getYear() - o.getYear();
     }
 }

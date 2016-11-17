@@ -36,7 +36,7 @@ public class EventFactory
     {
         Random random = new Random();
         String title = String.valueOf(random.nextInt(200));
-        LocalTime start = LocalTime.of(random.nextInt(12), random.nextInt(61));
+        LocalTime start = LocalTime.of(random.nextInt(12), random.nextInt(60));
         LocalTime end = start.plusHours(1);
         return createEvent(title,start,end,day);
     }

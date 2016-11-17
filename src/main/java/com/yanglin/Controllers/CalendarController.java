@@ -1,19 +1,25 @@
 package com.yanglin.Controllers;
-
-import com.yanglin.Models.DayFactory;
 import com.yanglin.Models.DayModel;
-import com.yanglin.Models.Event;
 import com.yanglin.Service.CalendarManager;
-import javafx.beans.binding.Bindings;
+import com.yanglin.Utils.Helper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.util.LinkedList;
+import java.util.SortedSet;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class CalendarController
 {
+    private final static Logger LOGGER = Logger.getLogger(CalendarController.class.getName());
+
+
     @Autowired
     private CalendarManager calendarManager;
 
@@ -21,17 +27,21 @@ public class CalendarController
     private BorderPane calendarPane;
 
     @FXML
-    private TableView calendarTableView;
-
-    @FXML
-    private Label lblMon1;
+    private GridPane calendarGridPane;
 
     @FXML
     private Button testBtn;
 
+    private LinkedList<Label> dayLbls;
+    private SortedSet<DayModel> currentDisplayingDays;
+
     public CalendarController(CalendarManager calendarManager)
     {
         this.calendarManager = calendarManager;
+        ConsoleHandler hl = new ConsoleHandler();
+        hl.setLevel(Level.ALL);
+        LOGGER.addHandler(hl);
+        LOGGER.setLevel(Level.ALL);
 
     }
     @FXML
@@ -47,8 +57,44 @@ public class CalendarController
         lblMon1.textProperty().bind(Bindings.convert(day.getDayProp()));
         lVMon0.setItems(day.getEvents());
         */
+        initCurrentDisplayingDays();
+        constructDayLbls();
+        initDayLbls();
     }
 
+    private void initDayLbls()
+    {
+        LOGGER.log(Level.INFO, "initing day lbls");
+        int start = this.currentDisplayingDays.first().getWeekday().getIndex();
+        for (DayModel d : this.currentDisplayingDays)
+        {
+
+            this.dayLbls.get(start).setText(String.valueOf(d.getDay()));
+            start++;
+        }
+        LOGGER.log(Level.INFO, "day lbls inizialized. count:{0}",this.dayLbls.size());
+    }
+
+    private void initCurrentDisplayingDays()
+    {
+        currentDisplayingDays = calendarManager.getDaysByMonthYear(Helper.getCurrentYear(), Helper.getCurrentMonth());
+    }
+
+    private void constructDayLbls()
+    {
+        LOGGER.log(Level.INFO, "starting to constructing day lbls");
+        this.dayLbls = new LinkedList<>();
+        for (int i=0; i<6; i++)
+        {
+            for (int j=0; j<6; j++)
+            {
+                Label label = new Label("x");
+                this.dayLbls.add(label);
+                this.calendarGridPane.add(label,j,i);
+            }
+        }
+        LOGGER.log(Level.INFO, "constructing day lbls finished");
+    }
 
 
     @FXML

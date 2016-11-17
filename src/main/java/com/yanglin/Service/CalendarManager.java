@@ -26,6 +26,7 @@ public class CalendarManager
     public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
+        this.days = this.dayRepo.getDays();
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)
