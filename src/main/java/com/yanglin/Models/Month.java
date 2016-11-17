@@ -35,6 +35,6 @@ public enum  Month
 
     public static Month getMonthFromDigit(int digit)
     {
-        return Month.values()[digit];
+        return Month.values()[digit-1];
     }
 }

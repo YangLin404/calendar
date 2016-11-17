@@ -1,10 +1,9 @@
 package com.yanglin.Repository;
 
 import com.yanglin.Models.DayModel;
+import java.util.TreeSet;
 
-import java.util.SortedSet;
-
-public class DayRepo
+public class DayRepo implements IDayRepo
 {
     public DayRepo()
     {
@@ -12,6 +11,9 @@ public class DayRepo
     }
 
 
-
-
+    @Override
+    public TreeSet<DayModel> getDays()
+    {
+        return null;
+    }
 }

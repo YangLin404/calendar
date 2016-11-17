@@ -4,6 +4,7 @@ import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
 import com.yanglin.Models.Month;
 import com.yanglin.Repository.DayRepo;
+import com.yanglin.Repository.IDayRepo;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class CalendarManager
 {
-    private DayRepo dayRepo;
+    private IDayRepo dayRepo;
 
     private SortedSet<DayModel> days;
 
 
-    public CalendarManager(DayRepo dayRepo)
+    public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
     }
