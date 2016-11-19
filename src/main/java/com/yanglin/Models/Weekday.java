@@ -2,7 +2,7 @@ package com.yanglin.Models;
 
 public enum Weekday
 {
-    MAANDAG(0,"MA"),DINSDAG(1,"DI"),WOENSDAG(2,"WOE"),DONDERDAG(3,"DO"),VRIJDAG(4,"VR"),ZATERDAG(5,"ZA"),ZONDAG(6,"ZO");
+    MAANDAG(0,"Ma"),DINSDAG(1,"Di"),WOENSDAG(2,"Woe"),DONDERDAG(3,"Do"),VRIJDAG(4,"Vr"),ZATERDAG(5,"Za"),ZONDAG(6,"Zo");
 
     private int index;
     private String afkorting;
@@ -25,6 +25,6 @@ public enum Weekday
 
     public static Weekday getWeekdayFromDigit(int digit)
     {
-        return Weekday.values()[digit-1];
+        return Weekday.values()[digit];
     }
 }

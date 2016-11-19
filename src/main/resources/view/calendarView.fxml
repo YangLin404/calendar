@@ -21,7 +21,7 @@
                         <Button mnemonicParsing="false" styleClass="btn, btn-default" text="Button" />
                      </children>
                   </HBox>
-                  <Label text="Label" />
+                  <Label fx:id="testLbl" text="Label" />
                </children>
             </HBox>
             <GridPane fx:id="calendarGridPane" VBox.vgrow="ALWAYS">

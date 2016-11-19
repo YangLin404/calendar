@@ -45,7 +45,7 @@ public class DayRepoHC implements IDayRepo
         {
             for (int i=1; i<=m.getTotaaldays(); i++)
             {
-                DayModel day = DayFactory.getInstance().createDay(i,m.getDigit(),2016);
+                DayModel day = DayFactory.getInstance().createDay(i,m,2016);
                 day.setId(total);
                 fakeDays.add(day);
             }

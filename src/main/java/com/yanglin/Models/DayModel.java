@@ -24,16 +24,24 @@ public class DayModel implements Comparable<DayModel>
         this.events = new SimpleListProperty<>();
     }
 
-    public DayModel(int day, int month, int year)
+    public DayModel(int day, Month month, int year)
     {
         this();
         this.dayProp = new SimpleIntegerProperty(day);
-        this.month = Month.getMonthFromDigit(month);
+        this.month = month;
         this.yearProp = new SimpleIntegerProperty(year);
         this.idProp = new SimpleLongProperty();
-        this.weekday = Helper.getWeekdayFromDate(this.yearProp.getValue(),this.month,this.dayProp.getValue());
+        this.weekday = Helper.getWeekdayFromDate(this.getYear(),this.month,this.getDay());
         this.events = FXCollections.observableArrayList();
     }
+
+    public DayModel(int day, int month, int year)
+    {
+        this(day, Month.getMonthFromDigit(month),year);
+
+    }
+
+
 
     public DayModel(int day, int month, int year, List<Event> events)
     {

@@ -6,8 +6,8 @@ import java.util.Calendar;
 
 public enum  Month
 {
-    JARUARI(1,31), FEBRUARI(2,28), MAART(3,31), APRIL(4,30), MEI(5,31),
-    JUNI(6,30), JULI(7,31), AUGUSTUS(8,31), SEPTEMBER(9,30), OKTOBER(10,31), NOVEMBER(11,30), DECEMBER(12,31);
+    JARUARI(0,31), FEBRUARI(1,28), MAART(2,31), APRIL(3,30), MEI(4,31),
+    JUNI(5,30), JULI(6,31), AUGUSTUS(7,31), SEPTEMBER(8,30), OKTOBER(9,31), NOVEMBER(10,30), DECEMBER(11,31);
 
     private int digit;
     private int totaaldays;
@@ -35,6 +35,6 @@ public enum  Month
 
     public static Month getMonthFromDigit(int digit)
     {
-        return Month.values()[digit-1];
+        return Month.values()[digit];
     }
 }

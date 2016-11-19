@@ -1,6 +1,7 @@
 package com.yanglin.Controllers;
 import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
+import com.yanglin.Models.Month;
 import com.yanglin.Models.Weekday;
 import com.yanglin.Service.CalendarManager;
 import com.yanglin.Utils.Helper;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 public class CalendarController
 {
     private final static Logger LOGGER = Logger.getLogger(CalendarController.class.getName());
+
 
     @Autowired
     private CalendarManager calendarManager;
@@ -37,6 +40,8 @@ public class CalendarController
 
     @FXML
     private Button testBtn;
+    @FXML
+    private Label testLbl;
 
     private LinkedList<MyVBox> dayCells;
     private LinkedList<DayLabel> dayLbls;
@@ -88,6 +93,7 @@ public class CalendarController
 
     private void initDayCells()
     {
+        resetDaycells();
         LOGGER.log(Level.INFO, "initing day cell");
         int start = this.currentDisplayingDays.first().getWeekday().getIndex();
         for (DayModel d : this.currentDisplayingDays)
@@ -103,6 +109,22 @@ public class CalendarController
     private void initCurrentDisplayingDays()
     {
         currentDisplayingDays = calendarManager.getDaysByMonthYear(Helper.getCurrentYear(), Helper.getCurrentMonth());
+    }
+
+    private void resetDaycells()
+    {
+        LOGGER.log(Level.INFO, "starting to resetting day lbl");
+        for (DayLabel d: dayLbls)
+        {
+            d.setText("");
+        }
+        LOGGER.log(Level.INFO, "resetting day lbl completed");
+        LOGGER.log(Level.INFO, "starting to resetting eventslistview");
+        for (ListView<Event> lv: eventsLvs)
+        {
+            lv.setItems(null);
+        }
+        LOGGER.log(Level.INFO, "resetting eventslistview completed");
     }
 
     private void constructDayCells()
@@ -144,18 +166,11 @@ public class CalendarController
     @FXML
     public void test()
     {
-        /*
-        Random rand = new Random();
-        day.setDay(rand.nextInt(50));
-        day.getEvents().get(0).setTitle(String.valueOf(rand.nextInt(20)));
-        Calendar start = Calendar.getInstance();
-        start.set(1991,Calendar.JANUARY,1,24,1);
-        Calendar end = Calendar.getInstance();
-        end.set(1991,Calendar.JANUARY,1,24,15);
-        day.addEvent(new Event("x", start, end,1));
-        day.getEvents().notifyAll();
-        */
-
+        Random random = new Random();
+        Month month = Month.getMonthFromDigit(random.nextInt(12));
+        currentDisplayingDays = calendarManager.getDaysByMonthYear(2016, Month.JARUARI);
+        this.testLbl.setText(month.JARUARI.name());
+        initDayCells();
 
     }
 }

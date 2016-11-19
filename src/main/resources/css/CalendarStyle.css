@@ -22,7 +22,8 @@
     -fx-border-style: solid;
 
 }
-.weekdayCell
+.weekdayLbl
 {
     -fx-font-weight: bold;
+    -fx-font-size: 15;
 }

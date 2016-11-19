@@ -31,6 +31,11 @@ public class DayFactory
         return new DayModel(day,month,year);
     }
 
+    public DayModel createDay(int day, Month month, int year)
+    {
+        return new DayModel(day,month,year);
+    }
+
     public DayModel createDummyDay()
     {
         return new DayModel(1,0,1000);
