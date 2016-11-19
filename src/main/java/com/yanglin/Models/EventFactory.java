@@ -5,9 +5,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Random;
 
-/**
- * Created by yanglin on 17/11/16.
- */
+
 public class EventFactory
 {
     private static EventFactory ourInstance = new EventFactory();
@@ -35,7 +33,7 @@ public class EventFactory
     public Event createRandomEvent(DayModel day)
     {
         Random random = new Random();
-        String title = String.valueOf(random.nextInt(200));
+        String title = "i'm day " + day.getDay();
         LocalTime start = LocalTime.of(random.nextInt(12), random.nextInt(60));
         LocalTime end = start.plusHours(1);
         return createEvent(title,start,end,day);

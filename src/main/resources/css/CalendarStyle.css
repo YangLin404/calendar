@@ -1,6 +1,28 @@
-.lblWeekday
+.dayLbl
 {
-    -fx-border-color: #2e8b57;
-    -fx-border-width: 1,0,0,0;
+    -fx-alignment: center-right;
+
+
+}
+
+.eventsListView
+{
+    -fx-background-color: transparent;
+}
+
+.list-cell:even, .list-cell:odd
+{
+    -fx-background-color: transparent;
+}
+
+.dayBox
+{
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: lightgrey;
     -fx-border-style: solid;
+
+}
+.weekdayCell
+{
+    -fx-font-weight: bold;
 }

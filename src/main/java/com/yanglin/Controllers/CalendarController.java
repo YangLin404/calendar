@@ -1,16 +1,23 @@
 package com.yanglin.Controllers;
 import com.yanglin.Models.DayModel;
+import com.yanglin.Models.Event;
+import com.yanglin.Models.Weekday;
 import com.yanglin.Service.CalendarManager;
 import com.yanglin.Utils.Helper;
+import com.yanglin.Views.DayLabel;
+import com.yanglin.Views.EventsListView;
+import com.yanglin.Views.MyVBox;
+import com.yanglin.Views.WeekdayLabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +25,6 @@ import java.util.logging.Logger;
 public class CalendarController
 {
     private final static Logger LOGGER = Logger.getLogger(CalendarController.class.getName());
-
 
     @Autowired
     private CalendarManager calendarManager;
@@ -32,16 +38,15 @@ public class CalendarController
     @FXML
     private Button testBtn;
 
-    private LinkedList<Label> dayLbls;
+    private LinkedList<MyVBox> dayCells;
+    private LinkedList<DayLabel> dayLbls;
+    private LinkedList<WeekdayLabel> weekdayLabels;
+    private LinkedList<EventsListView<Event>> eventsLvs;
     private SortedSet<DayModel> currentDisplayingDays;
 
     public CalendarController(CalendarManager calendarManager)
     {
         this.calendarManager = calendarManager;
-        ConsoleHandler hl = new ConsoleHandler();
-        hl.setLevel(Level.ALL);
-        LOGGER.addHandler(hl);
-        LOGGER.setLevel(Level.ALL);
 
     }
     @FXML
@@ -58,21 +63,41 @@ public class CalendarController
         lVMon0.setItems(day.getEvents());
         */
         initCurrentDisplayingDays();
-        constructDayLbls();
-        initDayLbls();
+        constructDayCells();
+        initDayCells();
+        initWeekDayCells();
+        addEventHandlersToDayCells();
     }
 
-    private void initDayLbls()
+    private void addEventHandlersToDayCells()
     {
-        LOGGER.log(Level.INFO, "initing day lbls");
+
+    }
+
+    private void initWeekDayCells()
+    {
+        LOGGER.log(Level.INFO, "initing weekday cells");
+        for (Weekday w : Weekday.values())
+        {
+            WeekdayLabel weekdayLabel = this.weekdayLabels.get(w.getIndex());
+            weekdayLabel.setText(w.getAfkorting());
+            weekdayLabel.getStyleClass().add("weekdayCell");
+        }
+        LOGGER.log(Level.INFO, "weekday cells initialized.");
+    }
+
+    private void initDayCells()
+    {
+        LOGGER.log(Level.INFO, "initing day cell");
         int start = this.currentDisplayingDays.first().getWeekday().getIndex();
         for (DayModel d : this.currentDisplayingDays)
         {
 
             this.dayLbls.get(start).setText(String.valueOf(d.getDay()));
+            this.eventsLvs.get(start).setItems(d.getEvents());
             start++;
         }
-        LOGGER.log(Level.INFO, "day lbls inizialized. count:{0}",this.dayLbls.size());
+        LOGGER.log(Level.INFO, "day cell initialized. count:{0}",this.dayCells.size());
     }
 
     private void initCurrentDisplayingDays()
@@ -80,17 +105,36 @@ public class CalendarController
         currentDisplayingDays = calendarManager.getDaysByMonthYear(Helper.getCurrentYear(), Helper.getCurrentMonth());
     }
 
-    private void constructDayLbls()
+    private void constructDayCells()
     {
-        LOGGER.log(Level.INFO, "starting to constructing day lbls");
+        LOGGER.log(Level.INFO, "starting to constructing day cells");
+
+        this.dayCells = new LinkedList<>();
         this.dayLbls = new LinkedList<>();
-        for (int i=0; i<6; i++)
+        this.weekdayLabels = new LinkedList<>();
+        this.eventsLvs = new LinkedList<>();
+        for (int i=0; i<7; i++)
         {
-            for (int j=0; j<6; j++)
+            for (int j=0; j<7; j++)
             {
-                Label label = new Label("x");
-                this.dayLbls.add(label);
-                this.calendarGridPane.add(label,j,i);
+                MyVBox vBox;
+                if (i==0)
+                {
+                    WeekdayLabel weekdayLabel = new WeekdayLabel();
+                    this.weekdayLabels.add(weekdayLabel);
+                    vBox = new MyVBox(weekdayLabel);
+                }
+                else
+                {
+                    DayLabel label = new DayLabel();
+                    EventsListView<Event> listView = new EventsListView<>();
+                    vBox = new MyVBox(label, listView);
+                    this.dayLbls.add(label);
+                    this.eventsLvs.add(listView);
+
+                }
+                this.dayCells.add(vBox);
+                this.calendarGridPane.add(vBox, j, i);
             }
         }
         LOGGER.log(Level.INFO, "constructing day lbls finished");

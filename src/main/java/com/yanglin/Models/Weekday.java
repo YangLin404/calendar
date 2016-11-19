@@ -2,7 +2,7 @@ package com.yanglin.Models;
 
 public enum Weekday
 {
-    MAANDAAG(0,"MA"),DINSDAG(1,"DI"),WOENSDAG(2,"WOE"),DONDERDAG(3,"DO"),VRIJDAG(4,"VR"),ZATERDAG(5,"ZA"),ZONDAG(6,"ZO");
+    MAANDAG(0,"MA"),DINSDAG(1,"DI"),WOENSDAG(2,"WOE"),DONDERDAG(3,"DO"),VRIJDAG(4,"VR"),ZATERDAG(5,"ZA"),ZONDAG(6,"ZO");
 
     private int index;
     private String afkorting;

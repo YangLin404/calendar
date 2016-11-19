@@ -1,0 +1,14 @@
+package com.yanglin.Views;
+
+import javafx.scene.control.Label;
+
+
+public class WeekdayLabel extends DayLabel
+{
+    public WeekdayLabel()
+    {
+        super();
+        this.getStyleClass().add("weekdayLbl");
+        this.setPrefSize(Double.MAX_VALUE,200);
+    }
+}

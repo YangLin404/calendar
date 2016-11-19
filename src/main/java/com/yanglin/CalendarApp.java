@@ -37,6 +37,7 @@ public class CalendarApp extends Application {
     public void start(Stage primaryStage) throws Exception{
         Scene scene = new Scene(rootNode);
         scene.getStylesheets().add("bootstrapfx.css");
+        scene.getStylesheets().add("/css/CalendarStyle.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
