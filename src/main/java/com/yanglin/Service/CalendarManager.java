@@ -40,4 +40,39 @@ public class CalendarManager
                 .filter(d -> (d.getMonth() == month && d.getYear() == year))
                 .collect(Collectors.toCollection(TreeSet<DayModel>::new));
     }
+
+    public SortedSet<DayModel> getDaysOfPreviousMonth(Month currentMonth, int currentYear)
+    {
+        int preYear=currentYear;
+        Month preMonth = currentMonth;
+
+        if (currentMonth==Month.JARUARI)
+        {
+            preYear++;
+            preMonth = Month.DECEMBER;
+        }
+        else
+        {
+            preMonth = currentMonth.getNextMonth();
+        }
+        return getDaysByMonthYear(preYear,preMonth);
+    }
+
+    public SortedSet<DayModel> getDaysOfNextMonth(Month currentMonth, int currentYear)
+    {
+        int nextYear=currentYear;
+        Month nextMonth = currentMonth;
+
+        if (currentMonth==Month.JARUARI)
+        {
+            nextYear++;
+            nextMonth = Month.DECEMBER;
+        }
+        else
+        {
+            nextMonth = currentMonth.getNextMonth();
+        }
+        return getDaysByMonthYear(nextYear,nextMonth);
+    }
+
 }

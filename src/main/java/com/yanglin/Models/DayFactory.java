@@ -41,14 +41,12 @@ public class DayFactory
         return new DayModel(1,0,1000);
     }
 
-    public Set<DayModel> getDaysByYear(int year)
+    public Set<DayModel> createDaysByYear(int year)
     {
         Set<DayModel> requestedDays = new TreeSet<>();
         for (Month m : Month.values())
         {
-            int aantalDays = m.getTotaaldays();
-            if (m == Month.FEBRUARI && Helper.isSchrikeljaar(year))
-                aantalDays++;
+            int aantalDays = m.getTotaaldays(year);
             for (int i=1; i<=aantalDays; i++)
             {
                 requestedDays.add(createDay(i,m.getDigit(),year));

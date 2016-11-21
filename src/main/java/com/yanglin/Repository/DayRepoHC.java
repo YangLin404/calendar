@@ -19,6 +19,8 @@ public class DayRepoHC implements IDayRepo
 
 
     private final static Logger LOGGER = Logger.getLogger(DayRepoHC.class.getName());
+
+    private final int YEARTOCREATE = 2016;
     //just for testing
     private TreeSet<DayModel> fakeDays;
     private EventFactory eventFactory;
@@ -40,16 +42,18 @@ public class DayRepoHC implements IDayRepo
     private void setupDays()
     {
         LOGGER.log(Level.INFO,"setup HC Days starting");
+
         int total=0;
         for (Month m : Month.values())
         {
-            for (int i=1; i<=m.getTotaaldays(); i++)
+            for (int i=1; i<=m.getTotaaldays(YEARTOCREATE); i++)
             {
-                DayModel day = DayFactory.getInstance().createDay(i,m,2016);
+                DayModel day = DayFactory.getInstance().createDay(i,m,YEARTOCREATE);
                 day.setId(total);
                 fakeDays.add(day);
             }
         }
+
         LOGGER.log(Level.FINE,"setup HC Days finished size of fakedays:{0}",fakeDays.size());
     }
 

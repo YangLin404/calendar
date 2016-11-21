@@ -9,6 +9,7 @@ import com.yanglin.Views.DayLabel;
 import com.yanglin.Views.EventsListView;
 import com.yanglin.Views.MyVBox;
 import com.yanglin.Views.WeekdayLabel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -171,6 +172,21 @@ public class CalendarController
         currentDisplayingDays = calendarManager.getDaysByMonthYear(2016, Month.JARUARI);
         this.testLbl.setText(month.JARUARI.name());
         initDayCells();
+
+    }
+
+    public void handlePreBtn(ActionEvent actionEvent)
+    {
+
+    }
+
+    public void handleCurrentMonthBtn(ActionEvent actionEvent)
+    {
+
+    }
+
+    public void handleNextMonthBtn(ActionEvent actionEvent)
+    {
 
     }
 }
