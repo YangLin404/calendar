@@ -4,6 +4,7 @@ import com.yanglin.Utils.Helper;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 
@@ -41,18 +42,28 @@ public class DayFactory
         return new DayModel(1,0,1000);
     }
 
-    public Set<DayModel> createDaysByYear(int year)
+    public SortedSet<DayModel> createDaysByYear(int year)
     {
-        Set<DayModel> requestedDays = new TreeSet<>();
+        SortedSet<DayModel> requestedDays = new TreeSet<>();
+        int total=0;
         for (Month m : Month.values())
         {
-            int aantalDays = m.getTotaaldays(year);
-            for (int i=1; i<=aantalDays; i++)
-            {
-                requestedDays.add(createDay(i,m.getDigit(),year));
-            }
+            requestedDays.addAll(createDaysByMonthYear(year,m));
         }
 
+        return requestedDays;
+    }
+
+    public SortedSet<DayModel> createDaysByMonthYear(int year, Month month)
+    {
+        SortedSet<DayModel> requestedDays = new TreeSet<>();
+        int total=0;
+        for (int i=1; i<=month.getTotaaldays(year); i++)
+        {
+            DayModel day = DayFactory.getInstance().createDay(i,month,year);
+            day.setId(total);
+            requestedDays.add(day);
+        }
         return requestedDays;
     }
 }

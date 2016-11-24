@@ -43,16 +43,7 @@ public class DayRepoHC implements IDayRepo
     {
         LOGGER.log(Level.INFO,"setup HC Days starting");
 
-        int total=0;
-        for (Month m : Month.values())
-        {
-            for (int i=1; i<=m.getTotaaldays(YEARTOCREATE); i++)
-            {
-                DayModel day = DayFactory.getInstance().createDay(i,m,YEARTOCREATE);
-                day.setId(total);
-                fakeDays.add(day);
-            }
-        }
+        this.fakeDays.addAll(DayFactory.getInstance().createDaysByYear(YEARTOCREATE));
 
         LOGGER.log(Level.FINE,"setup HC Days finished size of fakedays:{0}",fakeDays.size());
     }

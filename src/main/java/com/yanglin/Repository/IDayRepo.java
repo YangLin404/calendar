@@ -2,6 +2,7 @@ package com.yanglin.Repository;
 
 import com.yanglin.Models.DayModel;
 
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -9,5 +10,5 @@ import java.util.TreeSet;
  */
 public interface IDayRepo
 {
-    public TreeSet<DayModel> getDays();
+    public SortedSet<DayModel> getDays();
 }

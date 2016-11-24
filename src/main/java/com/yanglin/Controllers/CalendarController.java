@@ -14,8 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
@@ -169,8 +167,8 @@ public class CalendarController
     {
         Random random = new Random();
         Month month = Month.getMonthFromDigit(random.nextInt(12));
-        currentDisplayingDays = calendarManager.getDaysByMonthYear(2016, Month.JARUARI);
-        this.testLbl.setText(month.JARUARI.name());
+        currentDisplayingDays = calendarManager.getDaysByMonthYear(2016, Month.JANUARI);
+        this.testLbl.setText(currentDisplayingDays.first().getMonth().name());
         initDayCells();
 
     }

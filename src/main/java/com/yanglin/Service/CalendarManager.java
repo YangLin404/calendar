@@ -3,14 +3,10 @@ package com.yanglin.Service;
 import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
 import com.yanglin.Models.Month;
-import com.yanglin.Repository.DayRepo;
 import com.yanglin.Repository.IDayRepo;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -41,32 +37,32 @@ public class CalendarManager
                 .collect(Collectors.toCollection(TreeSet<DayModel>::new));
     }
 
-    public SortedSet<DayModel> getDaysOfPreviousMonth(Month currentMonth, int currentYear)
+    public SortedSet<DayModel> getDaysOfPreviousMonth(int currentYear, Month currentMonth)
     {
         int preYear=currentYear;
         Month preMonth = currentMonth;
 
-        if (currentMonth==Month.JARUARI)
+        if (currentMonth==Month.JANUARI)
         {
             preYear++;
             preMonth = Month.DECEMBER;
         }
         else
         {
-            preMonth = currentMonth.getNextMonth();
+            preMonth = currentMonth.getPreMonth();
         }
         return getDaysByMonthYear(preYear,preMonth);
     }
 
-    public SortedSet<DayModel> getDaysOfNextMonth(Month currentMonth, int currentYear)
+    public SortedSet<DayModel> getDaysOfNextMonth(int currentYear, Month currentMonth)
     {
         int nextYear=currentYear;
-        Month nextMonth = currentMonth;
+        Month nextMonth;
 
-        if (currentMonth==Month.JARUARI)
+        if (currentMonth==Month.DECEMBER)
         {
             nextYear++;
-            nextMonth = Month.DECEMBER;
+            nextMonth = Month.JANUARI;
         }
         else
         {

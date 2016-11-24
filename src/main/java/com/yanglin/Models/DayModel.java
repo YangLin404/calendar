@@ -137,7 +137,7 @@ public class DayModel implements Comparable<DayModel>
 
         DayModel day1 = (DayModel) o;
 
-        return dayProp == day1.dayProp && yearProp == day1.yearProp && month == day1.month;
+        return this.getDay() == day1.getDay() && this.getYear() == day1.getYear() && this.getMonth() == day1.getMonth();
 
     }
 
