@@ -18,13 +18,13 @@
                     <children>
                         <HBox styleClass="btn-group-horizontal">
                             <children>
-                                <Button fx:id="preBtn" mnemonicParsing="false" onAction="#handlePreBtn" onMouseClicked="#test" styleClass="btn, btn-primary" text="pre" />
+                                <Button fx:id="preBtn" mnemonicParsing="false" onAction="#handlePreBtn" styleClass="btn, btn-primary" text="pre" />
                                 <Button fx:id="currentBtn" mnemonicParsing="false" onAction="#handleCurrentMonthBtn" styleClass="btn, btn-primary" text="Vandaag" />
                                 <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#handleNextMonthBtn" styleClass="btn, btn-primary" text="next" />
                             </children>
                         </HBox>
                   <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="testLbl" alignment="CENTER_RIGHT" />
+                        <Label fx:id="monthLbl" alignment="CENTER_RIGHT" />
                     </children>
                 </HBox>
                 <GridPane fx:id="calendarGridPane" VBox.vgrow="ALWAYS">

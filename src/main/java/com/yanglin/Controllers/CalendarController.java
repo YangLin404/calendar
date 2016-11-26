@@ -1,8 +1,5 @@
 package com.yanglin.Controllers;
-import com.yanglin.Models.DayModel;
-import com.yanglin.Models.Event;
-import com.yanglin.Models.Month;
-import com.yanglin.Models.Weekday;
+import com.yanglin.Models.*;
 import com.yanglin.Service.CalendarManager;
 import com.yanglin.Utils.Helper;
 import com.yanglin.Views.DayLabel;
@@ -17,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +23,8 @@ public class CalendarController
 {
     private final static Logger LOGGER = Logger.getLogger(CalendarController.class.getName());
 
-
     @Autowired
-    private CalendarManager calendarManager;
+    private CalendarManager cm;
 
     @FXML
     private BorderPane calendarPane;
@@ -38,19 +33,24 @@ public class CalendarController
     private GridPane calendarGridPane;
 
     @FXML
-    private Button testBtn;
+    private Label monthLbl;
+
     @FXML
-    private Label testLbl;
+    private Button preBtn;
+    @FXML
+    private Button currentBtn;
+    @FXML
+    private Button nextBtn;
 
     private LinkedList<MyVBox> dayCells;
     private LinkedList<DayLabel> dayLbls;
     private LinkedList<WeekdayLabel> weekdayLabels;
     private LinkedList<EventsListView<Event>> eventsLvs;
-    private SortedSet<DayModel> currentDisplayingDays;
+    private CalendarViewModel calendarViewModel;
 
-    public CalendarController(CalendarManager calendarManager)
+    public CalendarController(CalendarManager cm)
     {
-        this.calendarManager = calendarManager;
+        this.cm = cm;
 
     }
     @FXML
@@ -66,11 +66,18 @@ public class CalendarController
         lblMon1.textProperty().bind(Bindings.convert(day.getDayProp()));
         lVMon0.setItems(day.getEvents());
         */
-        initCurrentDisplayingDays();
+        this.calendarViewModel = new CalendarViewModel();
+        updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
         constructDayCells();
         initDayCells();
         initWeekDayCells();
         addEventHandlersToDayCells();
+        bindProperties();
+    }
+
+    private void bindProperties()
+    {
+        this.monthLbl.textProperty().bind(this.calendarViewModel.getCurrentMonthStrProp());
     }
 
     private void addEventHandlersToDayCells()
@@ -94,8 +101,8 @@ public class CalendarController
     {
         resetDaycells();
         LOGGER.log(Level.INFO, "initing day cell");
-        int start = this.currentDisplayingDays.first().getWeekday().getIndex();
-        for (DayModel d : this.currentDisplayingDays)
+        int start = this.calendarViewModel.getCurrentDays().first().getWeekday().getIndex();
+        for (DayModel d : this.calendarViewModel.getCurrentDays())
         {
 
             this.dayLbls.get(start).setText(String.valueOf(d.getDay()));
@@ -105,9 +112,14 @@ public class CalendarController
         LOGGER.log(Level.INFO, "day cell initialized. count:{0}",this.dayCells.size());
     }
 
-    private void initCurrentDisplayingDays()
+    private void updateCalendarViewModel(int year, Month month)
     {
-        currentDisplayingDays = calendarManager.getDaysByMonthYear(Helper.getCurrentYear(), Helper.getCurrentMonth());
+        this.calendarViewModel.setDays(cm.getDaysByMonthYear(year, month));
+    }
+
+    private void updateCalendarViewModel(SortedSet<DayModel> days)
+    {
+        this.calendarViewModel.setDays(days);
     }
 
     private void resetDaycells()
@@ -161,30 +173,22 @@ public class CalendarController
         LOGGER.log(Level.INFO, "constructing day lbls finished");
     }
 
-
     @FXML
-    public void test()
-    {
-        Random random = new Random();
-        Month month = Month.getMonthFromDigit(random.nextInt(12));
-        currentDisplayingDays = calendarManager.getDaysByMonthYear(2016, Month.JANUARI);
-        this.testLbl.setText(currentDisplayingDays.first().getMonth().name());
-        initDayCells();
-
-    }
-
     public void handlePreBtn(ActionEvent actionEvent)
     {
-
+        updateCalendarViewModel(cm.getDaysOfPreMonth(this.calendarViewModel.getCurrentYear(), this.calendarViewModel.getCurrentMonth()));
+        initDayCells();
     }
-
+    @FXML
     public void handleCurrentMonthBtn(ActionEvent actionEvent)
     {
-
+        updateCalendarViewModel(Helper.getCurrentYear(), Helper.getCurrentMonth());
+        initDayCells();
     }
-
+    @FXML
     public void handleNextMonthBtn(ActionEvent actionEvent)
     {
-
+        this.calendarViewModel.setDays(cm.getDaysOfNextMonth(this.calendarViewModel.getCurrentYear(),this.calendarViewModel.getCurrentMonth()));
+        initDayCells();
     }
 }

@@ -7,15 +7,12 @@ import com.yanglin.Repository.IDayRepo;
 import com.yanglin.Service.CalendarManager;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
 
 import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
  * Created by yanglin on 22/11/16.
@@ -61,7 +58,7 @@ public class CalendarManagerTest
 
         SortedSet expectedDays = this.dayFactory.createDaysByMonthYear(this.YEARTOTEST, Month.JANUARI);
 
-        SortedSet<DayModel> days = calendarManager.getDaysOfPreviousMonth(this.YEARTOTEST, Month.FEBRUARI);
+        SortedSet<DayModel> days = calendarManager.getDaysOfPreMonth(this.YEARTOTEST, Month.FEBRUARI);
 
         Assert.assertArrayEquals(expectedDays.toArray(),days.toArray());
 

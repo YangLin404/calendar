@@ -37,7 +37,7 @@ public class CalendarManager
                 .collect(Collectors.toCollection(TreeSet<DayModel>::new));
     }
 
-    public SortedSet<DayModel> getDaysOfPreviousMonth(int currentYear, Month currentMonth)
+    public SortedSet<DayModel> getDaysOfPreMonth(int currentYear, Month currentMonth)
     {
         int preYear=currentYear;
         Month preMonth = currentMonth;
