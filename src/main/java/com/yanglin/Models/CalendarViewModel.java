@@ -48,12 +48,6 @@ public class CalendarViewModel
         return days;
     }
 
-    public void setCurrentMonthYear(int year, Month currentMonth)
-    {
-        this.currentMonth.setValue(currentMonth);
-        this.currentYear.setValue(year);
-    }
-
     public void setDays(SortedSet<DayModel> days)
     {
         this.days = days;
