@@ -4,11 +4,11 @@ import com.yanglin.Models.Event;
 import javafx.scene.layout.VBox;
 
 
-public class MyVBox extends VBox
+public class DayCellVBox extends VBox
 {
     private DayLabel dayLbl;
     private EventsListView<Event> eventsLv;
-    public MyVBox(DayLabel lbl, EventsListView<Event> eventsLv)
+    public DayCellVBox(DayLabel lbl, EventsListView<Event> eventsLv)
     {
         super(lbl,eventsLv);
         this.getStyleClass().add("dayBox");
@@ -16,7 +16,7 @@ public class MyVBox extends VBox
         this.eventsLv = eventsLv;
     }
 
-    public MyVBox(WeekdayLabel weekdayLabel)
+    public DayCellVBox(WeekdayLabel weekdayLabel)
     {
         super(weekdayLabel);
         this.getStyleClass().add("dayBox");

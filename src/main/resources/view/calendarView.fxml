@@ -14,7 +14,7 @@
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox fillHeight="false" prefHeight="34.0" prefWidth="100.0">
+                <HBox fillHeight="false" maxHeight="70.0" VBox.vgrow="ALWAYS">
                     <children>
                         <HBox styleClass="btn-group-horizontal">
                             <children>
@@ -24,7 +24,7 @@
                             </children>
                         </HBox>
                   <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="monthLbl" alignment="CENTER_RIGHT" />
+                        <Label fx:id="monthLbl" alignment="CENTER_RIGHT" styleClass="monthLbl" />
                     </children>
                 </HBox>
                 <GridPane fx:id="calendarGridPane" VBox.vgrow="ALWAYS">

@@ -8,5 +8,6 @@ public class EventsListView<T> extends ListView<T>
     {
         super();
         this.getStyleClass().add("eventsListView");
+        this.setPickOnBounds(false);
     }
 }
