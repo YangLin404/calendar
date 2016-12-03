@@ -16,6 +16,7 @@ public class DayModel implements Comparable<DayModel>
     private Month month;
     private SimpleIntegerProperty yearProp;
     private Weekday weekday;
+    private Work work;
     //private List<Event> events;
     private ObservableList<Event> events;
 
@@ -33,6 +34,7 @@ public class DayModel implements Comparable<DayModel>
         this.idProp = new SimpleLongProperty();
         this.weekday = Helper.getWeekdayFromDate(this.getYear(),this.month,this.getDay());
         this.events = FXCollections.observableArrayList();
+        this.setWork(Work.None);
     }
 
     public DayModel(int day, int month, int year)
@@ -104,6 +106,16 @@ public class DayModel implements Comparable<DayModel>
         this.yearProp.setValue(year);
     }
 
+    public Work getWork()
+    {
+        return work;
+    }
+
+    public void setWork(Work work)
+    {
+        this.work = work;
+    }
+
     public void setEvents(List<Event> events)
     {
         this.events = FXCollections.observableArrayList(events);
@@ -163,5 +175,15 @@ public class DayModel implements Comparable<DayModel>
             return month.getDigit() - o.getMonth().getDigit();
         }
         return getYear() - o.getYear();
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.getDay()
+                + "/"
+                + (this.getMonth().getDigit() +1)
+                +"/"
+                + this.getYear();
     }
 }

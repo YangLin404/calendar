@@ -3,6 +3,7 @@ package com.yanglin.Service;
 import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
 import com.yanglin.Models.Month;
+import com.yanglin.Models.Work;
 import com.yanglin.Repository.IDayRepo;
 import javafx.collections.ObservableList;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,11 @@ public class CalendarManager
             nextMonth = currentMonth.getNextMonth();
         }
         return getDaysByMonthYear(nextYear,nextMonth);
+    }
+
+    public void setWorkToDay(DayModel day, Work work)
+    {
+        day.setWork(work);
     }
 
 }

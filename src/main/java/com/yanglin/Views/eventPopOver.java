@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -26,17 +27,28 @@ import java.util.LinkedList;
 public class EventPopOver extends PopOver
 {
     private CalendarViewModel cvm;
-    public EventPopOver(CalendarViewModel cvm)
+    private CalendarController cc;
+    private Label date;
+
+    public EventPopOver(CalendarViewModel cvm, CalendarController cc)
     {
         super();
+        this.cc = cc;
+        this.date = new Label();
         constructLayout();
+        addEvents();
+    }
+
+    private void addEvents()
+    {
+
     }
 
     private void constructLayout()
     {
         BorderPane borderPane = new BorderPane();
-        Label label = new Label("werken:");
-        borderPane.setTop(label);
+        borderPane.getStyleClass().add("h1");
+        borderPane.setTop(date);
 
         VBox vBox = new VBox();
         //SegmentedButton segmentedButton = new SegmentedButton(new ToggleButton("xx"), new ToggleButton("yy"));
@@ -47,6 +59,14 @@ public class EventPopOver extends PopOver
         this.setContentNode(borderPane);
     }
 
+    @Override
+    protected void show()
+    {
+        super.show();
+        this.date.setText(((DayCellVBox) this.getOwnerNode()).getDayModel().toString());
+        this.date.getStyleClass().addAll("lbl","lbl-default");
+    }
+
     private void constructWorkBtns(VBox vBox)
     {
         HBox btnGroup = new HBox();
@@ -55,7 +75,7 @@ public class EventPopOver extends PopOver
         for (Work w : Work.values())
         {
             Button btn = new Button(w.name());
-            btn.getStyleClass().addAll("btn",w.getStyleClass());
+            btn.getStyleClass().addAll("btn","btn-"+w.getStyleClass());
             if (w.ordinal() == 0)
             {
                 btn.getStyleClass().add("first");
@@ -68,6 +88,15 @@ public class EventPopOver extends PopOver
             {
                 btn.getStyleClass().add("middle");
             }
+            btn.setOnAction(event ->
+            {
+                Button clickedBtn = (Button) event.getSource();
+                DayCellVBox dayCellVBox = (DayCellVBox) this.getOwnerNode();
+                Work selectedWork = Work.valueOf(clickedBtn.getText());
+                dayCellVBox.changeDayWork(selectedWork);
+
+                this.hide();
+            });
             btnGroup.getChildren().add(btn);
 
         }

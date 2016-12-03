@@ -64,7 +64,7 @@ public class CalendarController
         lVMon0.setItems(day.getEvents());
         */
         this.calendarViewModel = new CalendarViewModel();
-        this.eventPopOver = new EventPopOver(this.calendarViewModel);
+        this.eventPopOver = new EventPopOver(this.calendarViewModel, this);
         updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
         constructWeekdayCells();
         constructDayCells();
@@ -108,8 +108,10 @@ public class CalendarController
         for (DayModel d : this.calendarViewModel.getCurrentDays())
         {
             DayCellVBox crrDayCell = this.dayCells.get(start);
+            crrDayCell.setDayModel(d);
             crrDayCell.getDayLbl().setText(String.valueOf(d.getDay()));
-            crrDayCell.getEventsLv().setItems(d.getEvents());
+            crrDayCell.getWorkLbl().setValue(d.getWork());
+            //crrDayCell.getEventsLv().setItems(d.getEvents());
             crrDayCell.setOnContextMenuRequested(event -> this.eventPopOver.show(crrDayCell));
             start++;
         }
@@ -131,7 +133,7 @@ public class CalendarController
         LOGGER.log(Level.INFO, "starting to resetting day lbl and eventslistview");
         dayCells.stream().filter(DayCellVBox::isNotWeekday).forEach(v -> {
             v.getDayLbl().setText("");
-            v.getEventsLv().setItems(null);
+            //v.getEventsLv().setItems(null);
         });
         LOGGER.log(Level.INFO, "resetting day lbl and eventslistview completed");
     }
@@ -146,8 +148,9 @@ public class CalendarController
             for (int j=0; j<7; j++)
             {
                 DayLabel label = new DayLabel();
-                EventsListView<Event> listView = new EventsListView<>();
-                DayCellVBox vBox = new DayCellVBox(label, listView);
+                WorkLabel workLbl = new WorkLabel();
+                //EventsListView<Event> listView = new EventsListView<>();
+                DayCellVBox vBox = new DayCellVBox(label,workLbl,this);
                 vBox.setOnMouseClicked(event -> {
                     this.eventPopOver.show(vBox,event.getScreenX(),event.getScreenY());
                 });
@@ -156,6 +159,11 @@ public class CalendarController
             }
         }
         LOGGER.log(Level.INFO, "constructing day lbls finished");
+    }
+
+    public CalendarManager getCm()
+    {
+        return this.cm;
     }
 
     @FXML

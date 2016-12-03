@@ -5,7 +5,7 @@ package com.yanglin.Models;
  */
 public enum Work
 {
-    Vroeg("btn-info"), Late("btn-primary"), Nacht("btn-success");
+    Vroeg("info"), Late("primary"), Nacht("success"), None("default");
 
     private String styleClass;
 
