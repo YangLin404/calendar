@@ -3,6 +3,7 @@ package com.yanglin.Views;
 import com.yanglin.Controllers.CalendarController;
 import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
+import com.yanglin.Models.Work;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -58,6 +59,12 @@ public class DayCellPane extends BorderPane
         this.dayModel = dayModel;
         this.dayCellVBox.setDayModel(dayModel);
     }
+
+    public void changeDayWork(Work work)
+    {
+        this.dayCellVBox.changeDayWork(work);
+    }
+
 
     public DayModel getDayModel()
     {

@@ -45,6 +45,15 @@ public class DayCellVBox extends VBox
     {
         this.cc.getCm().setWorkToDay(dayModel,work);
         this.getWorkLbl().setValue(work);
+        if (work == Work.None)
+            this.removeWorkLbl();
+        else
+        {
+            if (!(this.getChildren().contains(this.workLbl)))
+            {
+                this.getChildren().add(this.workLbl);
+            }
+        }
     }
 
     public WorkLabel getWorkLbl()
@@ -55,7 +64,12 @@ public class DayCellVBox extends VBox
     public void setDayModel(DayModel dayModel)
     {
         this.dayModel = dayModel;
-        this.getChildren().add(workLbl);
+        //this.getChildren().add(workLbl);
+    }
+
+    public void removeWorkLbl()
+    {
+        this.getChildren().remove(workLbl);
     }
 
     /*
