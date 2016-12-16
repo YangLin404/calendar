@@ -6,6 +6,7 @@ import com.yanglin.Views.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class CalendarController
 
     private EventPopOver eventPopOver;
 
-    private LinkedList<DayCellVBox> dayCells;
+    private LinkedList<DayCellPane> dayCells;
     private CalendarViewModel calendarViewModel;
-    private LinkedList<DayCellVBox> weekdayCells;
+    private LinkedList<DayLabel> weekdayCells;
 
     public CalendarController(CalendarManager cm)
     {
@@ -82,9 +83,7 @@ public class CalendarController
         {
             WeekdayLabel weekdayLabel = new WeekdayLabel();
             weekdayLabel.setText(w.getAfkorting());
-            DayCellVBox weekdayBox = new DayCellVBox(weekdayLabel);
-            this.weekdayCells.add(weekdayBox);
-            this.calendarGridPane.add(weekdayBox, j, 0);
+            this.calendarGridPane.add(weekdayLabel, j, 0);
             j++;
         }
         LOGGER.log(Level.INFO, "weekday cells constructed.");
@@ -107,12 +106,14 @@ public class CalendarController
         int start = this.calendarViewModel.getCurrentDays().first().getWeekday().getIndex();
         for (DayModel d : this.calendarViewModel.getCurrentDays())
         {
-            DayCellVBox crrDayCell = this.dayCells.get(start);
+            DayCellPane crrDayCell = this.dayCells.get(start);
             crrDayCell.setDayModel(d);
             crrDayCell.getDayLbl().setText(String.valueOf(d.getDay()));
             crrDayCell.getWorkLbl().setValue(d.getWork());
+            crrDayCell.setOnMouseClicked((MouseEvent event) ->
+                    this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY()));
             //crrDayCell.getEventsLv().setItems(d.getEvents());
-            crrDayCell.setOnContextMenuRequested(event -> this.eventPopOver.show(crrDayCell));
+            //crrDayCell.setOnContextMenuRequested(event -> this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY()));
             start++;
         }
         LOGGER.log(Level.INFO, "day cell initialized. count:{0}",this.dayCells.size());
@@ -131,7 +132,7 @@ public class CalendarController
     private void resetDaycells()
     {
         LOGGER.log(Level.INFO, "starting to resetting day lbl and eventslistview");
-        dayCells.stream().filter(DayCellVBox::isNotWeekday).forEach(v -> {
+        dayCells.forEach(v -> {
             v.getDayLbl().setText("");
             //v.getEventsLv().setItems(null);
         });
@@ -143,6 +144,7 @@ public class CalendarController
         LOGGER.log(Level.INFO, "starting to constructing day cells");
 
         this.dayCells = new LinkedList<>();
+        int x =0;
         for (int i=1; i<7; i++)
         {
             for (int j=0; j<7; j++)
@@ -150,12 +152,10 @@ public class CalendarController
                 DayLabel label = new DayLabel();
                 WorkLabel workLbl = new WorkLabel();
                 //EventsListView<Event> listView = new EventsListView<>();
-                DayCellVBox vBox = new DayCellVBox(label,workLbl,this);
-                vBox.setOnMouseClicked(event -> {
-                    this.eventPopOver.show(vBox,event.getScreenX(),event.getScreenY());
-                });
-                this.dayCells.add(vBox);
-                this.calendarGridPane.add(vBox, j, i);
+                DayCellPane dayCellPane = new DayCellPane(label,workLbl,this);
+
+                this.dayCells.add(dayCellPane);
+                this.calendarGridPane.add(dayCellPane, j, i);
             }
         }
         LOGGER.log(Level.INFO, "constructing day lbls finished");

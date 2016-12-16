@@ -18,5 +18,6 @@ public class WorkLabel extends Label
         this.getStyleClass().removeAll();
         this.getStyleClass().addAll("lbl","lbl-"+work.getStyleClass());
         this.setText(work.name());
+        this.setPrefWidth(Double.MAX_VALUE);
     }
 }
