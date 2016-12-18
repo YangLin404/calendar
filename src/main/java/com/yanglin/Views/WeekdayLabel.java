@@ -1,7 +1,5 @@
 package com.yanglin.Views;
 
-import javafx.scene.control.Label;
-
 
 public class WeekdayLabel extends DayLabel
 {

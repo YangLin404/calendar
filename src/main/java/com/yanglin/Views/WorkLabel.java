@@ -10,13 +10,14 @@ public class WorkLabel extends Label
 {
     public WorkLabel()
     {
-
+        this.setPrefWidth(Double.MAX_VALUE);
     }
 
     public void setValue(Work work)
     {
         this.getStyleClass().removeAll();
-        this.getStyleClass().addAll("lbl","lbl-"+work.getStyleClass());
+        this.getStyleClass().addAll("lbl","lbl-"+work.getStyleClass(), "workLbl");
         this.setText(work.name());
+
     }
 }

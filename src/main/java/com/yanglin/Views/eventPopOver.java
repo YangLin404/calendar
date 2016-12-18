@@ -3,23 +3,12 @@ package com.yanglin.Views;
 import com.yanglin.Controllers.CalendarController;
 import com.yanglin.Models.CalendarViewModel;
 import com.yanglin.Models.Work;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import org.controlsfx.control.PopOver;
-import org.controlsfx.control.SegmentedButton;
-import org.controlsfx.tools.Borders;
-import org.springframework.cglib.core.internal.Function;
-
-import java.util.LinkedList;
 
 /**
  * Created by yanglin on 27/11/16.
@@ -63,7 +52,8 @@ public class EventPopOver extends PopOver
     protected void show()
     {
         super.show();
-        this.date.setText(((DayCellVBox) this.getOwnerNode()).getDayModel().toString());
+        DayCellPane ownerPane = (DayCellPane) this.getOwnerNode();
+        this.date.setText(ownerPane.getDayModel().toString());
         this.date.getStyleClass().addAll("lbl","lbl-default");
     }
 
