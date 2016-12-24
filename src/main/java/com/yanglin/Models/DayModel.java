@@ -22,33 +22,43 @@ public class DayModel implements Comparable<DayModel>
 
     public DayModel()
     {
-        this.events = new SimpleListProperty<>();
-    }
 
-    public DayModel(int day, Month month, int year)
-    {
-        this();
-        this.dayProp = new SimpleIntegerProperty(day);
-        this.month = month;
-        this.yearProp = new SimpleIntegerProperty(year);
-        this.idProp = new SimpleLongProperty();
-        this.weekday = Helper.getWeekdayFromDate(this.getYear(),this.month,this.getDay());
-        this.events = FXCollections.observableArrayList();
-        this.setWork(Work.None);
     }
 
     public DayModel(int day, int month, int year)
     {
-        this(day, Month.getMonthFromDigit(month),year);
-
+        Month m = Month.getMonthFromDigit(month);
+        Weekday w = Helper.getWeekdayFromDate(year,m,day);
+        init(day,m,year,w,Work.None);
     }
 
 
 
     public DayModel(int day, int month, int year, List<Event> events)
     {
-        this(day,month,year);
+        Month m = Month.getMonthFromDigit(month);
+        Weekday w = Helper.getWeekdayFromDate(year,m,day);
+        init(day,m,year,w,Work.None);
         this.setEvents(events);
+    }
+
+    public DayModel(long id, int day, int month, int year, Weekday weekday, Work work)
+    {
+        Month m = Month.getMonthFromDigit(month);
+        init(day,m,year,weekday,work);
+        setId(id);
+
+    }
+
+    private void init(int day, Month month, int year, Weekday weekday, Work work)
+    {
+        this.dayProp = new SimpleIntegerProperty(day);
+        this.month = month;
+        this.yearProp = new SimpleIntegerProperty(year);
+        this.idProp = new SimpleLongProperty();
+        this.weekday = weekday;
+        this.events = FXCollections.observableArrayList();
+        this.work = work;
     }
 
     public SimpleIntegerProperty getDayProp()

@@ -12,7 +12,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(AppConfig.class)
 public class CalendarApp extends Application {
 
     private ConfigurableApplicationContext springContext;

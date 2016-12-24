@@ -5,7 +5,9 @@ import com.yanglin.Models.Event;
 import com.yanglin.Models.Month;
 import com.yanglin.Models.Work;
 import com.yanglin.Repository.IDayRepo;
+import com.yanglin.Utils.Helper;
 import javafx.collections.ObservableList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.SortedSet;
@@ -19,11 +21,11 @@ public class CalendarManager
 
     private SortedSet<DayModel> days;
 
-
+    @Autowired
     public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
-        this.days = this.dayRepo.getDays();
+        this.days = this.dayRepo.readDaysByYear(Helper.getCurrentYear());
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)

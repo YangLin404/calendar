@@ -7,6 +7,8 @@ import com.yanglin.Models.Month;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +36,7 @@ public class DayRepoHC implements IDayRepo
 
     }
 
-    public TreeSet<DayModel> getDays()
+    public TreeSet<DayModel> readDaysByYear()
     {
         return fakeDays;
     }
@@ -57,5 +59,17 @@ public class DayRepoHC implements IDayRepo
         }
 
         LOGGER.log(Level.INFO,"setup HC fakeEvents finished");
+    }
+
+    @Override
+    public SortedSet<DayModel> readDaysByYear(int year)
+    {
+        return null;
+    }
+
+    @Override
+    public void updateDay(DayModel d)
+    {
+
     }
 }
