@@ -81,9 +81,9 @@ public class EventPopOver extends PopOver
             btn.setOnAction(event ->
             {
                 Button clickedBtn = (Button) event.getSource();
-                DayCellVBox dayCellVBox = (DayCellVBox) this.getOwnerNode();
+                DayCellPane dayCellPane = (DayCellPane) this.getOwnerNode();
                 Work selectedWork = Work.valueOf(clickedBtn.getText());
-                dayCellVBox.changeDayWork(selectedWork);
+                dayCellPane.changeDayWork(selectedWork);
 
                 this.hide();
             });

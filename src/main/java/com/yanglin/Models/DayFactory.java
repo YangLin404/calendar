@@ -34,7 +34,7 @@ public class DayFactory
 
     public DayModel createDay(int day, Month month, int year)
     {
-        return new DayModel(day,month,year);
+        return new DayModel(day,month.getDigit(),year);
     }
 
     public DayModel createDummyDay()

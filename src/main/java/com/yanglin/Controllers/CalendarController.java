@@ -11,17 +11,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 import java.util.LinkedList;
 import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Component
+@Controller
 public class CalendarController
 {
     private final static Logger LOGGER = Logger.getLogger(CalendarController.class.getName());
 
-    @Autowired
+
     private CalendarManager cm;
 
     @FXML
@@ -46,6 +48,7 @@ public class CalendarController
     private CalendarViewModel calendarViewModel;
     private LinkedList<DayLabel> weekdayCells;
 
+    @Autowired
     public CalendarController(CalendarManager cm)
     {
         this.cm = cm;
