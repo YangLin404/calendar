@@ -38,6 +38,7 @@ public class DayRepo implements IDayRepo
     @Override
     public void updateDay(DayModel d)
     {
-        throw new NotImplementedException();
+        DataDay dataDay = this.dayConvertor.convert(d);
+        restTemplate.postForObject("http://localhost:8080/updateDay",dataDay,DataDay.class);
     }
 }

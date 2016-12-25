@@ -12,20 +12,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class CalendarManager
 {
     private IDayRepo dayRepo;
-
     private SortedSet<DayModel> days;
+
+    private final static Logger LOGGER = Logger.getLogger(CalendarManager.class.getName());
 
     @Autowired
     public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
-        this.days = this.dayRepo.readDaysByYear(Helper.getCurrentYear());
+        this.resetDays(Helper.getCurrentYear());
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)
@@ -43,12 +46,13 @@ public class CalendarManager
     public SortedSet<DayModel> getDaysOfPreMonth(int currentYear, Month currentMonth)
     {
         int preYear=currentYear;
-        Month preMonth = currentMonth;
+        Month preMonth;
 
         if (currentMonth==Month.JANUARI)
         {
-            preYear++;
+            preYear--;
             preMonth = Month.DECEMBER;
+            resetDays(preYear);
         }
         else
         {
@@ -59,13 +63,16 @@ public class CalendarManager
 
     public SortedSet<DayModel> getDaysOfNextMonth(int currentYear, Month currentMonth)
     {
+        LOGGER.log(Level.INFO, "get days of next month for " + currentMonth + "/" + currentYear);
         int nextYear=currentYear;
         Month nextMonth;
 
         if (currentMonth==Month.DECEMBER)
         {
+            LOGGER.log(Level.INFO, "getting next month of Dec, need retrive days of next year");
             nextYear++;
             nextMonth = Month.JANUARI;
+            resetDays(nextYear);
         }
         else
         {
@@ -74,9 +81,17 @@ public class CalendarManager
         return getDaysByMonthYear(nextYear,nextMonth);
     }
 
+    public void resetDays(int year)
+    {
+        LOGGER.log(Level.INFO, "try to read days of year " + year + " from api.");
+        this.days = dayRepo.readDaysByYear(year);
+        LOGGER.log(Level.INFO,   this.days.size() +" days successful loaded from api.");
+    }
+
     public void setWorkToDay(DayModel day, Work work)
     {
         day.setWork(work);
+        dayRepo.updateDay(day);
     }
 
 }

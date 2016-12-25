@@ -22,13 +22,13 @@ public class DayConvertor
 
     }
 
-    public DayModel convert(DataDay d)
+    private DayModel convert(DataDay d)
     {
         DayModel dayModel = new DayModel(d.getId(),d.getDay(),d.getMonth().getDigit(),d.getYear(),d.getWeekday(),d.getWork());
         return dayModel;
     }
 
-    public SortedSet<DayModel> convert(SortedSet<DataDay> ds)
+    private SortedSet<DayModel> convert(SortedSet<DataDay> ds)
     {
         SortedSet<DayModel> days = new TreeSet<>();
         ds.forEach(d -> days.add(this.convert(d)));
@@ -36,9 +36,15 @@ public class DayConvertor
         return days;
     }
 
-    public SortedSet<DayModel> convert(DataDay[] ds)
+    SortedSet<DayModel> convert(DataDay[] ds)
     {
         SortedSet<DataDay> days = Arrays.stream(ds).collect(Collectors.toCollection(TreeSet::new));
         return this.convert(days);
+    }
+
+    DataDay convert(DayModel d)
+    {
+        DataDay dataDay = new DataDay(d.getId(),d.getDay(),d.getMonth(),d.getYear(),d.getWeekday(),d.getWork());
+        return dataDay;
     }
 }

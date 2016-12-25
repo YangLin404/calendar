@@ -22,16 +22,6 @@ public class DayFactory
 
     }
 
-    public DayModel createDay(int day, int month, int year, List<Event> events)
-    {
-        return new DayModel(day,month,year,events);
-    }
-
-    public DayModel createDay(int day, int month, int year)
-    {
-        return new DayModel(day,month,year);
-    }
-
     public DayModel createDay(int day, Month month, int year)
     {
         return new DayModel(day,month.getDigit(),year);

@@ -13,8 +13,7 @@ public class Helper
         int m = month.getDigit();
         c.set(year, m, day);
         int weekday = c.get(Calendar.DAY_OF_WEEK);
-        //java calendar start on sunday
-        return Weekday.getWeekdayFromDigit(weekday ==1 ? Weekday.ZONDAG.getIndex() : weekday-2);
+        return Weekday.getWDFromCWD(weekday);
 
     }
 
