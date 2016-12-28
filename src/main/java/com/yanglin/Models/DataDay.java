@@ -20,6 +20,7 @@ public class DataDay implements Comparable<DataDay>
     public DataDay(long id, int day, Month month, int year, Weekday weekday, Work work)
     {
         this.id = id;
+        this.day = day;
         this.month = month;
         this.year = year;
         this.weekday = weekday;

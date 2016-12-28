@@ -83,8 +83,7 @@ public class EventPopOver extends PopOver
                 Button clickedBtn = (Button) event.getSource();
                 DayCellPane dayCellPane = (DayCellPane) this.getOwnerNode();
                 Work selectedWork = Work.valueOf(clickedBtn.getText());
-                dayCellPane.changeDayWork(selectedWork);
-
+                cc.changeDayWork(dayCellPane.getDayModel(),selectedWork,dayCellPane);
                 this.hide();
             });
             btnGroup.getChildren().add(btn);

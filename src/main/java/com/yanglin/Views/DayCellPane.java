@@ -51,7 +51,7 @@ public class DayCellPane extends BorderPane
 
     private void setupStyle()
     {
-        this.getStyleClass().add("dayAnchorPane");
+        this.getStyleClass().add("dayCellPane");
     }
 
     public void setDayModel(DayModel dayModel)
@@ -62,7 +62,7 @@ public class DayCellPane extends BorderPane
 
     public void changeDayWork(Work work)
     {
-        this.dayCellVBox.changeDayWork(work);
+        this.dayCellVBox.setWorkDay(work);
     }
 
 

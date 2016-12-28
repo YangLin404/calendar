@@ -42,8 +42,6 @@ public class CalendarController
     @FXML
     private Button nextBtn;
 
-    private EventPopOver eventPopOver;
-
     private LinkedList<DayCellPane> dayCells;
     private CalendarViewModel calendarViewModel;
     private LinkedList<DayLabel> weekdayCells;
@@ -68,7 +66,6 @@ public class CalendarController
         lVMon0.setItems(day.getEvents());
         */
         this.calendarViewModel = new CalendarViewModel();
-        this.eventPopOver = new EventPopOver(this.calendarViewModel, this);
         updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
         constructWeekdayCells();
         constructDayCells();
@@ -114,7 +111,13 @@ public class CalendarController
             crrDayCell.getDayLbl().setText(String.valueOf(d.getDay()));
             crrDayCell.getWorkLbl().setValue(d.getWork());
             crrDayCell.setOnMouseClicked((MouseEvent event) ->
-                    this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY()));
+            {
+                //this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
+                EventPopOver eventPopOver = new EventPopOver(this.calendarViewModel,this);
+                eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
+            });
+
+
             //crrDayCell.getEventsLv().setItems(d.getEvents());
             //crrDayCell.setOnContextMenuRequested(event -> this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY()));
             start++;
@@ -135,11 +138,10 @@ public class CalendarController
     private void resetDaycells()
     {
         LOGGER.log(Level.INFO, "starting to resetting day lbl and eventslistview");
-        dayCells.forEach(v -> {
-            v.getDayLbl().setText("");
+        calendarGridPane.getChildren().removeAll(this.dayCells);
             //v.getEventsLv().setItems(null);
-        });
         LOGGER.log(Level.INFO, "resetting day lbl and eventslistview completed");
+        constructDayCells();
     }
 
     private void constructDayCells()
@@ -162,6 +164,12 @@ public class CalendarController
             }
         }
         LOGGER.log(Level.INFO, "constructing day lbls finished");
+    }
+
+    public void changeDayWork(DayModel d, Work w, DayCellPane dayCellPane)
+    {
+        this.getCm().setWorkToDay(d,w);
+        dayCellPane.changeDayWork(w);
     }
 
     public CalendarManager getCm()
