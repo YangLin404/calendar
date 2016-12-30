@@ -25,6 +25,7 @@ public class CalendarController
 
 
     private CalendarManager cm;
+    private DayCellFactory dayCellFactory;
 
     @FXML
     private BorderPane calendarPane;
@@ -34,6 +35,8 @@ public class CalendarController
 
     @FXML
     private Label monthLbl;
+    @FXML
+    private Label yearLbl;
 
     @FXML
     private Button preBtn;
@@ -47,9 +50,10 @@ public class CalendarController
     private LinkedList<DayLabel> weekdayCells;
 
     @Autowired
-    public CalendarController(CalendarManager cm)
+    public CalendarController(CalendarManager cm, DayCellFactory dayCF)
     {
         this.cm = cm;
+        this.dayCellFactory = dayCF;
 
     }
     @FXML
@@ -91,7 +95,8 @@ public class CalendarController
 
     private void bindProperties()
     {
-        this.monthLbl.textProperty().bind(this.calendarViewModel.getCurrentMonthYearStrProp());
+        this.monthLbl.textProperty().bind(this.calendarViewModel.getCurrentMonthStrProp());
+        this.yearLbl.textProperty().bind(this.calendarViewModel.currentYearStrProperty());
     }
 
     private void addEventHandlersToDayCells()
@@ -116,6 +121,10 @@ public class CalendarController
                 EventPopOver eventPopOver = new EventPopOver(this.calendarViewModel,this);
                 eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
             });
+            if (this.cm.isToday(d))
+            {
+                crrDayCell.getDayLbl().setToday();
+            }
 
 
             //crrDayCell.getEventsLv().setItems(d.getEvents());
@@ -147,22 +156,7 @@ public class CalendarController
     private void constructDayCells()
     {
         LOGGER.log(Level.INFO, "starting to constructing day cells");
-
-        this.dayCells = new LinkedList<>();
-        int x =0;
-        for (int i=1; i<7; i++)
-        {
-            for (int j=0; j<7; j++)
-            {
-                DayLabel label = new DayLabel();
-                WorkLabel workLbl = new WorkLabel();
-                //EventsListView<Event> listView = new EventsListView<>();
-                DayCellPane dayCellPane = new DayCellPane(label,workLbl,this);
-
-                this.dayCells.add(dayCellPane);
-                this.calendarGridPane.add(dayCellPane, j, i);
-            }
-        }
+        this.dayCells = dayCellFactory.createDaycells(this);
         LOGGER.log(Level.INFO, "constructing day lbls finished");
     }
 
@@ -170,6 +164,11 @@ public class CalendarController
     {
         this.getCm().setWorkToDay(d,w);
         dayCellPane.changeDayWork(w);
+    }
+
+    public GridPane getCalendarGridPane()
+    {
+        return calendarGridPane;
     }
 
     public CalendarManager getCm()
@@ -186,7 +185,7 @@ public class CalendarController
     @FXML
     public void handleCurrentMonthBtn(ActionEvent actionEvent)
     {
-        updateCalendarViewModel(Helper.getCurrentYear(), Helper.getCurrentMonth());
+        updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
         initDayCells();
     }
     @FXML

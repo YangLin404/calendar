@@ -15,14 +15,15 @@ public class CalendarViewModel
     private SimpleIntegerProperty currentYear;
     private SimpleObjectProperty<Month> currentMonth;
     private SimpleStringProperty currentMonthStr;
-    private SimpleStringProperty currentMonthYearStr;
+    private SimpleStringProperty currentYearStr;
 
     public CalendarViewModel()
     {
         this.currentYear = new SimpleIntegerProperty();
         this.currentMonth = new SimpleObjectProperty<>();
         this.currentMonthStr = new SimpleStringProperty();
-        this.currentMonthYearStr = new SimpleStringProperty();
+        this.currentYearStr = new SimpleStringProperty();
+
     }
 
     public Month getCurrentMonth()
@@ -57,14 +58,9 @@ public class CalendarViewModel
 
     }
 
-    public String getCurrentMonthYearStr()
+    public SimpleStringProperty currentYearStrProperty()
     {
-        return currentMonthYearStr.get();
-    }
-
-    public SimpleStringProperty getCurrentMonthYearStrProp()
-    {
-        return currentMonthYearStr;
+        return currentYearStr;
     }
 
     private void updateCurrentDate()
@@ -72,6 +68,6 @@ public class CalendarViewModel
         this.currentMonth.setValue(this.days.first().getMonth());
         this.currentYear.setValue(this.days.first().getYear());
         this.currentMonthStr.setValue(this.currentMonth.getValue().toString());
-        this.currentMonthYearStr.setValue(this.currentMonth.getValue() + " " + this.currentYear.getValue());
+        this.currentYearStr.set(String.valueOf(this.currentYear.getValue()));
     }
 }

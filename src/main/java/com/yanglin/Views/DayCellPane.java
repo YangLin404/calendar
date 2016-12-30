@@ -4,7 +4,9 @@ import com.yanglin.Controllers.CalendarController;
 import com.yanglin.Models.DayModel;
 import com.yanglin.Models.Event;
 import com.yanglin.Models.Work;
+import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 
 /**
  * Created by yanglin on 3/12/16.
@@ -24,16 +26,16 @@ public class DayCellPane extends BorderPane
 
     public DayCellPane(DayLabel lbl, WorkLabel workLbl, CalendarController cc)
     {
-        init(lbl,workLbl,new DayCellVBox(workLbl,cc));
+        init(lbl,new DayCellVBox(workLbl,cc));
     }
 
     public DayCellPane(DayLabel lbl, WorkLabel workLbl, EventsListView<Event> eventsLv, CalendarController cc)
     {
         //this.eventsLv = eventsLv;
-        init(lbl,workLbl,new DayCellVBox(workLbl,eventsLv,cc));
+        init(lbl,new DayCellVBox(workLbl,eventsLv,cc));
     }
 
-    private void init(DayLabel lbl, WorkLabel workLbl, DayCellVBox dayCellVBox)
+    private void init(DayLabel lbl, DayCellVBox dayCellVBox)
     {
         setupStyle();
         this.dayLbl = lbl;
@@ -44,6 +46,7 @@ public class DayCellPane extends BorderPane
 
     private void setupLayout()
     {
+        this.dayLbl.setAlignment(Pos.CENTER_RIGHT);
         this.setTop(this.dayLbl);
         this.setCenter(this.dayCellVBox);
         this.setMinHeight(0.0);

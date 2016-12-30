@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -28,7 +29,8 @@ public class CalendarManager
     public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
-        this.resetDays(Helper.getCurrentYear());
+        days = new TreeSet<>();
+        this.readMoreDays(Helper.getCurrentYear());
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)
@@ -52,7 +54,7 @@ public class CalendarManager
         {
             preYear--;
             preMonth = Month.DECEMBER;
-            resetDays(preYear);
+            readMoreDays(preYear);
         }
         else
         {
@@ -72,7 +74,7 @@ public class CalendarManager
             LOGGER.log(Level.INFO, "getting next month of Dec, need retrive days of next year");
             nextYear++;
             nextMonth = Month.JANUARI;
-            resetDays(nextYear);
+            readMoreDays(nextYear);
         }
         else
         {
@@ -81,10 +83,10 @@ public class CalendarManager
         return getDaysByMonthYear(nextYear,nextMonth);
     }
 
-    public void resetDays(int year)
+    private void readMoreDays(int year)
     {
         LOGGER.log(Level.INFO, "try to read days of year " + year + " from api.");
-        this.days = dayRepo.readDaysByYear(year);
+        this.days.addAll(this.dayRepo.readDaysByYear(year));
         LOGGER.log(Level.INFO,   this.days.size() +" days successful loaded from api.");
     }
 
@@ -92,6 +94,15 @@ public class CalendarManager
     {
         day.setWork(work);
         dayRepo.updateDay(day);
+    }
+
+    public boolean isToday(DayModel d)
+    {
+        Calendar c = Calendar.getInstance();
+        int todayYear = c.get(Calendar.YEAR);
+        int todayMonth = c.get(Calendar.MONTH);
+        int todayDay = c.get((Calendar.DAY_OF_MONTH));
+        return d.getYear() == todayYear && d.getMonth().getDigit() == todayMonth && d.getDay() == todayDay;
     }
 
 }

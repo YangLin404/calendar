@@ -8,6 +8,11 @@ public class DayLabel extends Label
     {
         super();
         this.getStyleClass().add("dayLbl");
-        this.setPrefWidth(Double.MAX_VALUE);
+        //this.setPrefWidth(Double.MAX_VALUE);
+    }
+
+    public void setToday()
+    {
+        this.getStyleClass().add("todayLbl");
     }
 }
