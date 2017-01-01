@@ -24,15 +24,15 @@ public class DayCellPane extends BorderPane
 
     }
 
-    public DayCellPane(DayLabel lbl, WorkLabel workLbl, CalendarController cc)
+    public DayCellPane(DayLabel lbl, CalendarController cc)
     {
-        init(lbl,new DayCellVBox(workLbl,cc));
+        init(lbl,new DayCellVBox(cc));
     }
 
-    public DayCellPane(DayLabel lbl, WorkLabel workLbl, EventsListView<Event> eventsLv, CalendarController cc)
+    public DayCellPane(DayLabel lbl, EventsListView<Event> eventsLv, CalendarController cc)
     {
         //this.eventsLv = eventsLv;
-        init(lbl,new DayCellVBox(workLbl,eventsLv,cc));
+        init(lbl,new DayCellVBox(eventsLv,cc));
     }
 
     private void init(DayLabel lbl, DayCellVBox dayCellVBox)
@@ -77,9 +77,5 @@ public class DayCellPane extends BorderPane
     public DayLabel getDayLbl()
     {
         return dayLbl;
-    }
-    public WorkLabel getWorkLbl()
-    {
-        return this.dayCellVBox.getWorkLbl();
     }
 }

@@ -114,11 +114,11 @@ public class CalendarController
             DayCellPane crrDayCell = this.dayCells.get(start);
             crrDayCell.setDayModel(d);
             crrDayCell.getDayLbl().setText(String.valueOf(d.getDay()));
-            crrDayCell.getWorkLbl().setValue(d.getWork());
+            crrDayCell.changeDayWork(d.getWork());
             crrDayCell.setOnMouseClicked((MouseEvent event) ->
             {
                 //this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
-                EventPopOver eventPopOver = new EventPopOver(this.calendarViewModel,this);
+                EventPopOver eventPopOver = new EventPopOver(this);
                 eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
             });
             if (this.cm.isToday(d))

@@ -67,6 +67,11 @@
     -fx-font-size: 15;
 }
 
+.eventPopOver
+{
+    -fx-font-size: 15;
+}
+
 .transparantBG
 {
     -fx-background-color: transparent;

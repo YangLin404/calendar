@@ -15,21 +15,19 @@ public class DayCellVBox extends VBox
     private CalendarController cc;
 
     //private EventsListView<Event> eventsLv;
-    public DayCellVBox(WorkLabel workLbl, EventsListView<Event> eventsLv, CalendarController cc)
+    public DayCellVBox(EventsListView<Event> eventsLv, CalendarController cc)
     {
-        init(workLbl,cc);
+        init(cc);
     }
 
-    public DayCellVBox(WorkLabel workLbl, CalendarController cc)
+    public DayCellVBox(CalendarController cc)
     {
-        init(workLbl,cc);
+        init(cc);
     }
 
-    private void init(WorkLabel workLbl, CalendarController cc)
+    private void init(CalendarController cc)
     {
-        this.workLbl = workLbl;
         this.cc = cc;
-
         setupStyle();
     }
 
@@ -42,6 +40,7 @@ public class DayCellVBox extends VBox
 
     public void setWorkDay(Work work)
     {
+        /*
         this.getWorkLbl().setValue(work);
         if (work == Work.None)
             this.removeWorkLbl();
@@ -51,6 +50,14 @@ public class DayCellVBox extends VBox
             {
                 this.getChildren().add(this.workLbl);
             }
+        }
+        */
+        this.removeWorkLbl();
+        if (work != Work.None)
+        {
+            this.workLbl = new WorkLabel(work);
+            this.getChildren().add(this.workLbl);
+
         }
     }
 

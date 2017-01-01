@@ -36,9 +36,8 @@ public class DayCellFactory
     private DayCellPane createDaycell(CalendarController cc)
     {
         DayLabel label = new DayLabel();
-        WorkLabel workLbl = new WorkLabel();
         //EventsListView<Event> listView = new EventsListView<>();
-        return new DayCellPane(label,workLbl,cc);
+        return new DayCellPane(label,cc);
     }
 
 }

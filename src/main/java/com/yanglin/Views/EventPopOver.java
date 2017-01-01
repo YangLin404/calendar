@@ -15,11 +15,10 @@ import org.controlsfx.control.PopOver;
  */
 public class EventPopOver extends PopOver
 {
-    private CalendarViewModel cvm;
     private CalendarController cc;
     private Label date;
 
-    public EventPopOver(CalendarViewModel cvm, CalendarController cc)
+    public EventPopOver(CalendarController cc)
     {
         super();
         this.cc = cc;
@@ -36,12 +35,10 @@ public class EventPopOver extends PopOver
     private void constructLayout()
     {
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("h1");
+        borderPane.getStyleClass().add("eventPopOver");
         borderPane.setTop(date);
 
         VBox vBox = new VBox();
-        //SegmentedButton segmentedButton = new SegmentedButton(new ToggleButton("xx"), new ToggleButton("yy"));
-        //vBox.getChildren().addAll(segmentedButton);
         constructWorkBtns(vBox);
         borderPane.setCenter(vBox);
 
