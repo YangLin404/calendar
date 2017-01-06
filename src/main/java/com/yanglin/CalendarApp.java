@@ -1,7 +1,10 @@
 package com.yanglin;
 
 
+import com.sun.javafx.application.LauncherImpl;
+import com.yanglin.Views.MyPreloader;
 import javafx.application.Application;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,7 +12,6 @@ import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 public class CalendarApp extends Application {
@@ -19,7 +21,8 @@ public class CalendarApp extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        LauncherImpl.launchApplication(CalendarApp.class, MyPreloader.class, args);
     }
 
 

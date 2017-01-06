@@ -3,9 +3,6 @@
     -fx-alignment: center-right;
     -fx-font-size: 18;
     -fx-padding: 3 3 3 3;
-
-
-
 }
 
 .dayBox
@@ -70,7 +67,10 @@
 .eventPopOver
 {
     -fx-font-size: 15;
+    -fx-padding: 2 2 2 1;
 }
+
+
 
 .transparantBG
 {

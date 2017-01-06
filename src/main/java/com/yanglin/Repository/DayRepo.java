@@ -5,7 +5,6 @@ import com.yanglin.Models.DayModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.crypto.Data;
 import java.util.Arrays;
@@ -19,6 +18,7 @@ public class DayRepo implements IDayRepo
 
     private RestTemplate restTemplate;
     private DayConvertor dayConvertor;
+    private String connectieStr;
 
     @Autowired
     public DayRepo(DayConvertor dayConvertor)
@@ -31,7 +31,7 @@ public class DayRepo implements IDayRepo
     @Override
     public SortedSet<DayModel> readDaysByYear(int year)
     {
-        DataDay[] datadays = restTemplate.getForObject("http://localhost:8080/readDaysByYear?Year="+year, DataDay[].class);
+        DataDay[] datadays = restTemplate.getForObject(this.connectieStr+"/readDaysByYear?Year="+year, DataDay[].class);
         return dayConvertor.convert(datadays);
     }
 
@@ -39,6 +39,11 @@ public class DayRepo implements IDayRepo
     public void updateDay(DayModel d)
     {
         DataDay dataDay = this.dayConvertor.convert(d);
-        restTemplate.postForObject("http://localhost:8080/updateDay",dataDay,DataDay.class);
+        restTemplate.postForObject(this.connectieStr+"/updateDay",dataDay,DataDay.class);
+    }
+
+    public void setConnectieStr(String conn)
+    {
+        this.connectieStr = conn;
     }
 }

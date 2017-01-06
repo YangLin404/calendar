@@ -1,15 +1,14 @@
 package com.yanglin.Service;
 
-import com.yanglin.Models.DayModel;
-import com.yanglin.Models.Event;
-import com.yanglin.Models.Month;
-import com.yanglin.Models.Work;
+import com.yanglin.Models.*;
 import com.yanglin.Repository.IDayRepo;
+import com.yanglin.Repository.SettingRepo;
 import com.yanglin.Utils.Helper;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Calendar;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -21,16 +20,34 @@ import java.util.stream.Collectors;
 public class CalendarManager
 {
     private IDayRepo dayRepo;
+    private SettingRepo settingRepo;
     private SortedSet<DayModel> days;
+    private SettingModel userSetting;
 
     private final static Logger LOGGER = Logger.getLogger(CalendarManager.class.getName());
 
     @Autowired
-    public CalendarManager(IDayRepo dayRepo)
+    public CalendarManager(IDayRepo dayRepo, SettingRepo settingRepo)
     {
         this.dayRepo = dayRepo;
-        days = new TreeSet<>();
+        this.settingRepo = settingRepo;
+
+    }
+
+    @PostConstruct
+    public void init()
+    {
+        this.days = new TreeSet<>();
+        this.readSettings();
+        this.dayRepo.setConnectieStr(this.userSetting.getUrl()+":"+this.userSetting.getPort());
         this.readMoreDays(Helper.getCurrentYear());
+
+
+    }
+
+    private void readSettings()
+    {
+        userSetting = settingRepo.readSetting();
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)

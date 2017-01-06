@@ -72,4 +72,10 @@ public class DayRepoHC implements IDayRepo
     {
 
     }
+
+    @Override
+    public void setConnectieStr(String conn)
+    {
+
+    }
 }

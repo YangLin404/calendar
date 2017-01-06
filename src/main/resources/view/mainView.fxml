@@ -16,6 +16,11 @@
                         <fx:include fx:id="CalendarPane" source="calendarView.fxml" />
                     </content>
                 </Tab>
+                <Tab text="Setting">
+                    <content>
+                        <fx:include fx:id="CalendarSettingPane" source="calendarSettingView.fxml" />
+                    </content>
+                </Tab>
             </tabs>
 
         </TabPane>

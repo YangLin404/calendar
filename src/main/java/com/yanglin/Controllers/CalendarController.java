@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.util.LinkedList;
@@ -59,16 +58,6 @@ public class CalendarController
     @FXML
     public void initialize()
     {
-        /* test
-        day = DayFactory.getInstance().createDay(1,1,1991);
-        Calendar start = Calendar.getInstance();
-        start.set(1991,Calendar.JANUARY,1,24,1);
-        Calendar end = Calendar.getInstance();
-        end.set(1991,Calendar.JANUARY,1,24,15);
-        day.addEvent(new Event("x",start,end,1));
-        lblMon1.textProperty().bind(Bindings.convert(day.getDayProp()));
-        lVMon0.setItems(day.getEvents());
-        */
         this.calendarViewModel = new CalendarViewModel();
         updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
         constructWeekdayCells();
@@ -122,13 +111,7 @@ public class CalendarController
                 eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY());
             });
             if (this.cm.isToday(d))
-            {
                 crrDayCell.getDayLbl().setToday();
-            }
-
-
-            //crrDayCell.getEventsLv().setItems(d.getEvents());
-            //crrDayCell.setOnContextMenuRequested(event -> this.eventPopOver.show(crrDayCell,event.getScreenX(),event.getScreenY()));
             start++;
         }
         LOGGER.log(Level.INFO, "day cell initialized. count:{0}",this.dayCells.size());

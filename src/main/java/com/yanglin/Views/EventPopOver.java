@@ -1,7 +1,6 @@
 package com.yanglin.Views;
 
 import com.yanglin.Controllers.CalendarController;
-import com.yanglin.Models.CalendarViewModel;
 import com.yanglin.Models.Work;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,15 +15,22 @@ import org.controlsfx.control.PopOver;
 public class EventPopOver extends PopOver
 {
     private CalendarController cc;
-    private Label date;
+    private Label dateLbl;
 
     public EventPopOver(CalendarController cc)
     {
         super();
         this.cc = cc;
-        this.date = new Label();
+        this.dateLbl = new Label();
         constructLayout();
         addEvents();
+        setStyle();
+    }
+
+    private void setStyle()
+    {
+        this.dateLbl.getStyleClass().add("eventPopOverDayLbl");
+        this.dateLbl.getStyleClass().addAll("lbl","lbl-default");
     }
 
     private void addEvents()
@@ -36,7 +42,7 @@ public class EventPopOver extends PopOver
     {
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("eventPopOver");
-        borderPane.setTop(date);
+        borderPane.setTop(dateLbl);
 
         VBox vBox = new VBox();
         constructWorkBtns(vBox);
@@ -50,8 +56,7 @@ public class EventPopOver extends PopOver
     {
         super.show();
         DayCellPane ownerPane = (DayCellPane) this.getOwnerNode();
-        this.date.setText(ownerPane.getDayModel().toString());
-        this.date.getStyleClass().addAll("lbl","lbl-default");
+        this.dateLbl.setText(ownerPane.getDayModel().toString());
     }
 
     private void constructWorkBtns(VBox vBox)
