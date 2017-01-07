@@ -2,12 +2,12 @@ package com.yanglin.Views;
 
 import javafx.application.Preloader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.controlsfx.control.MaskerPane;
 
 /**
  * Created by yanglin on 6/01/17.
@@ -16,23 +16,27 @@ public class MyPreloader extends Preloader
 {
 
     private Stage preloaderStage;
+    private MaskerPane maskerPane = new MaskerPane();
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
         this.preloaderStage = primaryStage;
 
-        VBox loading = new VBox(20);
-        loading.setMaxWidth(Region.USE_PREF_SIZE);
-        loading.setMaxHeight(Region.USE_PREF_SIZE);
-        loading.getChildren().add(new ProgressBar());
-        loading.getChildren().add(new Label("Please wait..."));
+        Image splash = new Image("/pictures/splash.JPG",400,600,false,false);
+        ImageView imageView = new ImageView(splash);
+        imageView.setPreserveRatio(true);
 
-        BorderPane root = new BorderPane(loading);
+        this.maskerPane.setVisible(true);
+
+        StackPane root = new StackPane();
+        root.getChildren().addAll(imageView,this.maskerPane);
+
+
         Scene scene = new Scene(root);
 
         primaryStage.setWidth(400);
-        primaryStage.setHeight(300);
+        primaryStage.setHeight(600);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -41,6 +45,7 @@ public class MyPreloader extends Preloader
     public void handleStateChangeNotification(StateChangeNotification stateChangeNotification) {
         if (stateChangeNotification.getType() == StateChangeNotification.Type.BEFORE_START) {
             preloaderStage.hide();
+            this.maskerPane.setVisible(false);
         }
 
 

@@ -1,13 +1,12 @@
 package com.yanglin.Repository;
-
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanglin.Models.SettingModel;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by yanglin on 1/01/17.
@@ -16,6 +15,7 @@ import java.io.*;
 public class SettingRepo
 {
     private final String FILENAME = "setting.json";
+    private final String homeDir = System.getProperty("user.home")+File.separator+"MyCalendar";
 
     public SettingRepo()
     {
@@ -26,7 +26,7 @@ public class SettingRepo
     {
         try
         {
-            FileReader fileReader = new FileReader(FILENAME);
+            FileReader fileReader = new FileReader(this.getPathToSettingFile());
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(fileReader,SettingModel.class);
         } catch (FileNotFoundException e)
@@ -45,13 +45,21 @@ public class SettingRepo
         ObjectMapper objectMapper = new ObjectMapper();
         try
         {
-            objectMapper.writeValue(new FileOutputStream(FILENAME),settingModel);
+            Path path = Paths.get(homeDir);
+            if (!Files.exists(path))
+                Files.createDirectory(path);
+            objectMapper.writeValue(new FileOutputStream(this.getPathToSettingFile()),settingModel);
         } catch (IOException e)
         {
             e.printStackTrace();
         }
 
         return settingModel;
+    }
+
+    private String getPathToSettingFile()
+    {
+        return homeDir+File.separator+FILENAME;
     }
 
 

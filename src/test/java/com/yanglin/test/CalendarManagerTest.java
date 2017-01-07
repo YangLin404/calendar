@@ -34,8 +34,8 @@ public class CalendarManagerTest
     {
         this.mockDayRepo = Mockito.mock(DayRepo.class);
         this.dayFactory = DayFactory.getInstance();
-        when(this.mockDayRepo.readDaysByYear()).thenReturn(dayFactory.createDaysByYear(this.YEARTOTEST));
-        this.calendarManager = new CalendarManager(this.mockDayRepo);
+        //when(this.mockDayRepo.readDaysByYear()).thenReturn(dayFactory.createDaysByYear(this.YEARTOTEST));
+        //this.calendarManager = new CalendarManager(this.mockDayRepo);
     }
 
 
