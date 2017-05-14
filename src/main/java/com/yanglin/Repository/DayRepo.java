@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.xml.crypto.Data;
 import java.util.Arrays;
 import java.util.SortedSet;
@@ -20,14 +21,22 @@ public class DayRepo implements IDayRepo
     private final static Logger LOGGER = Logger.getLogger(DayRepo.class.getName());
 
     private RestTemplate restTemplate;
+    @Autowired
     private DayConvertor dayConvertor;
     private String connectieStr;
-
     @Autowired
+    private SettingRepo settingRepo;
+
     public DayRepo(DayConvertor dayConvertor)
     {
         this.restTemplate = new RestTemplate();
         this.dayConvertor = dayConvertor;
+    }
+
+    @PostConstruct
+    private void init()
+    {
+        this.connectieStr = settingRepo.readSetting().getConnectionStr();
     }
 
 
@@ -48,10 +57,5 @@ public class DayRepo implements IDayRepo
         DataDay dataDay = this.dayConvertor.convert(d);
         LOGGER.log(Level.INFO, "updating day: " + d.toString() + ". url: " + url);
         restTemplate.postForObject(url,dataDay,DataDay.class);
-    }
-
-    public void setConnectieStr(String conn)
-    {
-        this.connectieStr = conn;
     }
 }

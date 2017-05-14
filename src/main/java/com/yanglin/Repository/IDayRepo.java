@@ -13,6 +13,4 @@ public interface IDayRepo
     SortedSet<DayModel> readDaysByYear(int year);
 
     void updateDay(DayModel d);
-
-    void setConnectieStr(String conn);
 }

@@ -19,35 +19,24 @@ import java.util.stream.Collectors;
 @Service
 public class CalendarManager
 {
+    @Autowired
     private IDayRepo dayRepo;
-    private SettingRepo settingRepo;
-    private SortedSet<DayModel> days;
-    private SettingModel userSetting;
+    private SortedSet<DayModel> days = new TreeSet<>();
 
     private final static Logger LOGGER = Logger.getLogger(CalendarManager.class.getName());
 
-    @Autowired
-    public CalendarManager(IDayRepo dayRepo, SettingRepo settingRepo)
+    public CalendarManager(IDayRepo dayRepo)
     {
         this.dayRepo = dayRepo;
-        this.settingRepo = settingRepo;
-
+        this.readMoreDays(Helper.getCurrentYear());
     }
 
     @PostConstruct
     public void init()
     {
-        this.days = new TreeSet<>();
-        this.readSettings();
-        this.dayRepo.setConnectieStr(this.userSetting.getUrl()+":"+this.userSetting.getPort());
         this.readMoreDays(Helper.getCurrentYear());
 
 
-    }
-
-    private void readSettings()
-    {
-        userSetting = settingRepo.readSetting();
     }
 
     public ObservableList<Event> getEventsByDay(DayModel day)

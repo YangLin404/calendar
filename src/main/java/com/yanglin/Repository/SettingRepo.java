@@ -41,7 +41,7 @@ public class SettingRepo
 
     private SettingModel createSetting()
     {
-        SettingModel settingModel = new SettingModel("http://yanglin.ddns.net",8888);
+        SettingModel settingModel = new SettingModel("http://yanglin.ddns.net",8080);
         ObjectMapper objectMapper = new ObjectMapper();
         try
         {
