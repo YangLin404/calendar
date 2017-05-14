@@ -6,6 +6,7 @@ import com.yanglin.Views.MyPreloader;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -42,6 +43,7 @@ public class CalendarApp extends Application {
         scene.getStylesheets().addAll("/css/CalendarStyle.css","/css/EventPopOverStyle.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
 

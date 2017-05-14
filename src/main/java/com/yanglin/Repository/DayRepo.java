@@ -10,11 +10,14 @@ import javax.xml.crypto.Data;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Repository
 public class DayRepo implements IDayRepo
 {
+    private final static Logger LOGGER = Logger.getLogger(DayRepo.class.getName());
 
     private RestTemplate restTemplate;
     private DayConvertor dayConvertor;
@@ -31,15 +34,20 @@ public class DayRepo implements IDayRepo
     @Override
     public SortedSet<DayModel> readDaysByYear(int year)
     {
-        DataDay[] datadays = restTemplate.getForObject(this.connectieStr+"/readDaysByYear?Year="+year, DataDay[].class);
+        String url = this.connectieStr+"/readDaysByYear?Year="+year;
+        LOGGER.log(Level.INFO, "reading days of year " + year + ". url: " + url);
+        DataDay[] datadays = restTemplate.getForObject(url, DataDay[].class);
+        LOGGER.log(Level.INFO, datadays.length + " days retrieved.");
         return dayConvertor.convert(datadays);
     }
 
     @Override
     public void updateDay(DayModel d)
     {
+        String url = this.connectieStr+"/updateDay";
         DataDay dataDay = this.dayConvertor.convert(d);
-        restTemplate.postForObject(this.connectieStr+"/updateDay",dataDay,DataDay.class);
+        LOGGER.log(Level.INFO, "updating day: " + d.toString() + ". url: " + url);
+        restTemplate.postForObject(url,dataDay,DataDay.class);
     }
 
     public void setConnectieStr(String conn)

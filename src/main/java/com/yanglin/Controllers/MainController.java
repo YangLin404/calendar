@@ -27,4 +27,10 @@ public class MainController
     {
         this.calendarController = calendarController;
     }
+
+    @FXML
+    public void print()
+    {
+        calendarController.printCurrentPage();
+    }
 }

@@ -2,7 +2,6 @@ package com.yanglin.Controllers;
 
 import com.yanglin.Views.DayCellPane;
 import com.yanglin.Views.DayLabel;
-import com.yanglin.Views.WorkLabel;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;

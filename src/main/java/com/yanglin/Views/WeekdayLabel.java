@@ -8,5 +8,6 @@ public class WeekdayLabel extends DayLabel
         super();
         this.getStyleClass().addAll("weekdayLbl");
         this.setPrefSize(Double.MAX_VALUE,200);
+
     }
 }

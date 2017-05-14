@@ -5,10 +5,11 @@ import com.yanglin.Utils.Helper;
 import com.yanglin.Views.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.transform.Scale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -60,11 +61,17 @@ public class CalendarController
     {
         this.calendarViewModel = new CalendarViewModel();
         updateCalendarViewModel(Helper.getCurrentYear(),Helper.getCurrentMonth());
+        setLayoutToGridPane();
         constructWeekdayCells();
         constructDayCells();
         initDayCells();
         addEventHandlersToDayCells();
         bindProperties();
+    }
+
+    private void setLayoutToGridPane()
+    {
+
     }
 
     private void constructWeekdayCells()
@@ -147,6 +154,29 @@ public class CalendarController
     {
         this.getCm().setWorkToDay(d,w);
         dayCellPane.changeDayWork(w);
+    }
+
+    public void printCurrentPage()
+    {
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4,PageOrientation.LANDSCAPE, 0.5,0.5,0.5,0.5);
+        printerJob.getJobSettings().setPrintQuality(PrintQuality.DRAFT);
+        printerJob.getJobSettings().setPrintColor(PrintColor.MONOCHROME);
+        GridPane paneToPrint = this.getCalendarGridPane();
+        double scaleX
+                = (pageLayout.getPrintableWidth()-5) / paneToPrint.getBoundsInParent().getWidth();
+        double scaleY
+                = (pageLayout.getPrintableHeight()-5) / paneToPrint.getBoundsInParent().getHeight();
+        Scale scaleToPrint = new Scale(scaleX,scaleY);
+        paneToPrint.getTransforms().add(scaleToPrint);
+
+        if (printerJob.printPage(pageLayout,paneToPrint))
+        {
+            printerJob.endJob();
+            paneToPrint.getTransforms().remove(scaleToPrint);
+        }
+
+
     }
 
     public GridPane getCalendarGridPane()
